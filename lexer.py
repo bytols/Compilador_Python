@@ -9,13 +9,14 @@ class Lexer():
 
     def add_lexems(self) -> None:
 
-        self.lg.add('DIGITO' , r'[0-9]' )
+        self.lg.add('INTEIRO' , r'inteiro' )
+        self.lg.add('SEPARADOR' , r'\$\$')
+        self.lg.add('DIGITO' , r'\b[0-9]\b' )
         self.lg.add('NUMERO' , r'[0-9]+' )
         self.lg.add('NUMERO_REAL' , r'[0-9]\.[0-9]+')
-        self.lg.add('LETRA' , r'[a-zA-Z]')
+        self.lg.add('LETRA' , r'\b[a-zA-Z]\b')
         self.lg.add('ID' , r'[a-zA-Z]+|[a-zA-Z]+[a-zA-Z][a-zA-Z\w]+' )
         self.lg.add('NEWLINE' , r'\n' )
-        self.lg.add('INTEIRO' , r'inteiro' )
         self.lg.add('REAL' , r'real' )
         self.lg.add('SE' , r'se' )
         self.lg.add('ENTAO' , r'entao' )
@@ -30,7 +31,7 @@ class Lexer():
         self.lg.add('VEZES' , r'\*' )
         self.lg.add('DIVISAO' , r'/' )
         self.lg.add('E' , r'&&' )
-        self.lg.add('OU' , r'||' )
+        self.lg.add('OU' , r'\|\|' )
         self.lg.add('MENOR' , r'<' )
         self.lg.add('MAIOR' , r'>' )
         self.lg.add('MENORIGUAL' , r'<=' )
@@ -43,7 +44,7 @@ class Lexer():
         self.lg.add('FECHAPARENTESES' , r'\)' )
         self.lg.add('ABRECH' , r'{' )
         self.lg.add('FECHACH' , r'}' )
-        self.lg.ignore(r'[\t]+')
+        self.lg.ignore(r'\s+')
 
     def lexer(self, txt:str) -> None:
 

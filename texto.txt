@@ -1,1 +1,4 @@
-1
+inteiro erick = 22;
+inteiro erick = 22;
+
+11 + 10;
