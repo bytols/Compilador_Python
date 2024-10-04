@@ -1,58 +1,61 @@
 from rply import LexerGenerator
 
-newline = 0
-lg = LexerGenerator()
 
-lg.add('DIGITO' , r'[0-9]' )
-lg.add('NUMERO' , r'[0-9]+' )
-lg.add('NUMERO_REAL' , r'[0-9]\.[0-9]+')
-lg.add('LETRA' , r'[a-zA-Z]')
-lg.add('ID' , r'[a-zA-Z]+|[a-zA-Z]+[a-zA-Z][a-zA-Z\w]+' )
-lg.add('NEWLINE' , r'\n' )
-lg.add('INTEIRO' , r'inteiro' )
-lg.add('REAL' , r'real' )
-lg.add('SE' , r'se' )
-lg.add('ENTAO' , r'entao' )
-lg.add('SENAO' , r'senao' )
-lg.add('ENQUANTO' , r'enquanto' )
-lg.add('REPITA' , r'repita' )
-lg.add('ATE' , r'ate' )
-lg.add('LER' , r'ler' )
-lg.add('MOSTRAR' , r'mostrar' )
-lg.add('MAIS' , r'\+' )
-lg.add('MENOS' , r'-' )
-lg.add('VEZES' , r'\*' )
-lg.add('DIVISAO' , r'/' )
-lg.add('E' , r'&&' )
-lg.add('OU' , r'||' )
-lg.add('MENOR' , r'<' )
-lg.add('MAIOR' , r'>' )
-lg.add('MENORIGUAL' , r'<=' )
-lg.add('MAIORIGUAL' , r'>=' )
-lg.add('IGUAL' , r'==' )
-lg.add('DIFERENTE' , r'!=' )
-lg.add('ATRIBUICAO' , r'=' )
-lg.add('PONTOVIRGULA' , r';' )
-lg.add('ABREPARENTESES' , r'\(' )
-lg.add('FECHAPARENTESES' , r'\)' )
-lg.add('ABRECH' , r'{' )
-lg.add('FECHACH' , r'}' )
+class Lexer():
 
-lg.ignore(r'[\t]+')
+    def __init__(self) -> None:
+        self.newline = 0
+        self.lg = LexerGenerator()
 
-l = lg.build()
-#for token in l.lex('1+1+1'):
-#    print(token)
+    def add_lexems(self) -> None:
 
-with open("texto.txt") as file:
-    arquivo = file.read()
-    print(arquivo)
+        self.lg.add('DIGITO' , r'[0-9]' )
+        self.lg.add('NUMERO' , r'[0-9]+' )
+        self.lg.add('NUMERO_REAL' , r'[0-9]\.[0-9]+')
+        self.lg.add('LETRA' , r'[a-zA-Z]')
+        self.lg.add('ID' , r'[a-zA-Z]+|[a-zA-Z]+[a-zA-Z][a-zA-Z\w]+' )
+        self.lg.add('NEWLINE' , r'\n' )
+        self.lg.add('INTEIRO' , r'inteiro' )
+        self.lg.add('REAL' , r'real' )
+        self.lg.add('SE' , r'se' )
+        self.lg.add('ENTAO' , r'entao' )
+        self.lg.add('SENAO' , r'senao' )
+        self.lg.add('ENQUANTO' , r'enquanto' )
+        self.lg.add('REPITA' , r'repita' )
+        self.lg.add('ATE' , r'ate' )
+        self.lg.add('LER' , r'ler' )
+        self.lg.add('MOSTRAR' , r'mostrar' )
+        self.lg.add('MAIS' , r'\+' )
+        self.lg.add('MENOS' , r'-' )
+        self.lg.add('VEZES' , r'\*' )
+        self.lg.add('DIVISAO' , r'/' )
+        self.lg.add('E' , r'&&' )
+        self.lg.add('OU' , r'||' )
+        self.lg.add('MENOR' , r'<' )
+        self.lg.add('MAIOR' , r'>' )
+        self.lg.add('MENORIGUAL' , r'<=' )
+        self.lg.add('MAIORIGUAL' , r'>=' )
+        self.lg.add('IGUAL' , r'==' )
+        self.lg.add('DIFERENTE' , r'!=' )
+        self.lg.add('ATRIBUICAO' , r'=' )
+        self.lg.add('PONTOVIRGULA' , r';' )
+        self.lg.add('ABREPARENTESES' , r'\(' )
+        self.lg.add('FECHAPARENTESES' , r'\)' )
+        self.lg.add('ABRECH' , r'{' )
+        self.lg.add('FECHACH' , r'}' )
+        self.lg.ignore(r'[\t]+')
 
-for token in l.lex(arquivo):
-    print(token)
-    if token.name == 'NEWLINE':
-        newline += 1
+    def lexer(self, txt:str) -> None:
 
-print(newline)
+        l = self.lg.build()
+        with open(txt) as file:
+            arquivo = file.read()
+            print(arquivo)
+        for token in l.lex(arquivo):
+            print(token)
+            if token.name == 'NEWLINE':
+                self.newline += 1
+        print(self.newline)
+        return(l.lex(arquivo))
         
 
