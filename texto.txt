@@ -1,6 +1,5 @@
 real aquiles;
+inteiro felpes;
+real joga, muito;
 
-
-1 + 10;
-12 + 88;
-14 + 78;
+se 12 == 10 entao mostrar(compilador);

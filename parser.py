@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from arvore_abstrata import Programa, DeclaracaoVariaveis , SeqComando,Declaracoes, Comando, ListaIdentificador, ComandoAtribuir, ComandoEnquanto, ComandoLer, ComandoMostrar, ComandoRepita,ComandoSe, Acao, ExpEOu, Exsp
+from arvore_abstrata import Programa, DeclaracaoVariaveis , SeqComando,Declaracoes, ListaIdentificador, ComandoAtribuir, ComandoEnquanto, ComandoLer, ComandoMostrar, ComandoRepita,ComandoSe, Acao, ExpEOu, Exsp
 from lexer import Lexer
 
 lex = Lexer()
@@ -79,9 +79,11 @@ class Parser():
          if len(p) == 2:
             seqComando = p[0]
             seqComando.filhos.append(p[1])
+            print("foiseqcomando")
             return(seqComando)
          else:
             seqComando = SeqComando(p[0])
+            print("foiseqcomando2")
             seqComando.filhos.append(p[0])
             return(seqComando)
          
@@ -95,15 +97,17 @@ class Parser():
          if p[0].value == 'se':
             if len(p) == 3:
                seentaosenao = ComandoSe(p[1], p[3], p[5])
-               seentaosenao.filho.append(p[1])
-               seentaosenao.filho.append(p[3])
-               seentaosenao.filho.append(p[5])
+               seentaosenao.filhos.append(p[1])
+               seentaosenao.filhos.append(p[3])
+               seentaosenao.filhos.append(p[5])
+               print("foise")
                return(seentaosenao)
             else:
                seentaosenao = ComandoSe(p[1], p[3])
                seentaosenao.tipo = 'se-entao'
-               seentaosenao.filho.append(p[1])
-               seentaosenao.filho.append(p[3])
+               seentaosenao.filhos.append(p[1])
+               seentaosenao.filhos.append(p[3])
+               print("foise2")
                return(seentaosenao)
          elif p[0].value == 'enquanto':
             comandoEnquanto = ComandoEnquanto(p[2],p[4])
@@ -151,13 +155,15 @@ class Parser():
       @self.pg.production('exp : exp E exp | exp E exp | exp E exp | exp E exp')
       def exp(p):
          if p[0].name == 'OU' or p[0].name == 'E':
+            print("foiexp1")
             exp = ExpEOu(p[0], p[2], p[1])
             exp.valor = p[1]
             exp.filhos.append(p[0])
             exp.filhos.append(p[2])
             return(exp)
          else:
-            exp = Exsp(p[0], p[2])
+            print("foiexp2")
+            exp = Exsp(p[0], p[2], p[1])
             exp.valor = p[1]
             return(exp)
 

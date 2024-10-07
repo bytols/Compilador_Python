@@ -67,7 +67,7 @@ class ListaIdentificador(BaseBox):
 
 class ComandoSe(BaseBox):
 
-    def __init__(self, exp, acao, acao_else:None):
+    def __init__(self, exp, acao, acao_else =None):
         self.exp = exp
         self.acao = acao
         self.acao_else = acao_else
