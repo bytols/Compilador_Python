@@ -156,12 +156,26 @@ class Acao(BaseBox):
     
 class Exsp(BaseBox):
 
-    def __init__(self, exp, id):
-        self
+    def __init__(self, left, right, token):
+        self.exp_left = left
+        self.exp_right = right
+        self.tipo = 'Exsp'
+        self.valor = token
+        self.filhos = []
+        self.irmaos = []
 
-class ExpEOu(BaseBox)
+    def eval(self):
+        return [self.exp_left , self.exp_right] 
+
+class ExpEOu(BaseBox):
     
-    def __init__(self, exp, id):
-        self.exp-left
-        self.exp-right
-        tipo = 
+    def __init__(self, left, right, token):
+        self.exp_left = left
+        self.exp_right = right
+        self.tipo = 'ExpEOu'
+        self.valor = token
+        self.filhos = []
+        self.irmaos = []
+
+    def eval(self):
+        return [self.exp_left , self.exp_right] 

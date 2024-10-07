@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from arvore_abstrata import Programa, DeclaracaoVariaveis , SeqComando,Declaracoes, Comando, ListaIdentificador, ComandoAtribuir, ComandoEnquanto, ComandoLer, ComandoMostrar, ComandoRepita,ComandoSe, Acao
+from arvore_abstrata import Programa, DeclaracaoVariaveis , SeqComando,Declaracoes, Comando, ListaIdentificador, ComandoAtribuir, ComandoEnquanto, ComandoLer, ComandoMostrar, ComandoRepita,ComandoSe, Acao, ExpEOu, Exsp
 from lexer import Lexer
 
 lex = Lexer()
@@ -149,8 +149,18 @@ class Parser():
       @self.pg.production('exp : NUMERO DIFERENTE NUMERO | DIGITO DIFERENTE NUMERO | NUMERO DIFERENTE DIGITO | DIGITO DIFERENTE DIGITO')
       @self.pg.production('exp : exp OU exp | exp OU exp | exp OU exp | exp OU exp')
       @self.pg.production('exp : exp E exp | exp E exp | exp E exp | exp E exp')
-      def exp():
-         pass
+      def exp(p):
+         if p[0].name == 'OU' or p[0].name == 'E':
+            exp = ExpEOu(p[0], p[2], p[1])
+            exp.valor = p[1]
+            exp.filhos.append(p[0])
+            exp.filhos.append(p[2])
+            return(exp)
+         else:
+            exp = Exsp(p[0], p[2])
+            exp.valor = p[1]
+            return(exp)
+
    def get_parser(self):
       return self.pg.build()
    
