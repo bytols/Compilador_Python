@@ -1,4 +1,6 @@
-inteiro erick = 22;
-inteiro erick = 22;
+real aquiles;
 
-11 + 10;
+
+1 + 10;
+12 + 88;
+14 + 78;

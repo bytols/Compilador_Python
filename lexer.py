@@ -9,7 +9,9 @@ class Lexer():
 
     def add_lexems(self) -> None:
 
+        self.lg.add('VIRGULA' , r'\,')
         self.lg.add('INTEIRO' , r'inteiro' )
+        self.lg.add('REAL' , r'real' )
         self.lg.add('SEPARADOR' , r'\$\$')
         self.lg.add('DIGITO' , r'\b[0-9]\b' )
         self.lg.add('NUMERO' , r'[0-9]+' )
@@ -17,7 +19,6 @@ class Lexer():
         self.lg.add('LETRA' , r'\b[a-zA-Z]\b')
         self.lg.add('ID' , r'[a-zA-Z]+|[a-zA-Z]+[a-zA-Z][a-zA-Z\w]+' )
         self.lg.add('NEWLINE' , r'\n' )
-        self.lg.add('REAL' , r'real' )
         self.lg.add('SE' , r'se' )
         self.lg.add('ENTAO' , r'entao' )
         self.lg.add('SENAO' , r'senao' )
