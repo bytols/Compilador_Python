@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from arvore_abstrata import Programa, DeclaracaoVariaveis , SeqComando,Declaracoes, ListaIdentificador, ComandoAtribuir, ComandoEnquanto, ComandoLer, ComandoMostrar, ComandoRepita,ComandoSe, Acao, ExpEOu, Exsp
+from arvore_abstrata import Programa, DeclaracaoVariaveis , SeqComando,Declaracoes, ListaIdentificador, ComandoAtribuir, ComandoEnquanto, ComandoLer, ComandoMostrar, ComandoRepita,ComandoSe, Acao, ExpEOu, Exsp, ExpNum
 from lexer import Lexer
 
 lex = Lexer()
@@ -152,33 +152,43 @@ class Parser():
             acao.filhos.append(p[0])
             return(acao)
       
-      @self.pg.production('exp : NUMERO MAIS exp | DIGITO MAIS exp | NUMERO MENOS exp | DIGITO MENOS exp | NUMERO DIVISAO exp | DIGITO DIVISAO exp')
-      @self.pg.production('exp : NUMERO MAIS NUMERO | DIGITO MAIS NUMERO | NUMERO MAIS DIGITO | DIGITO MAIS DIGITO')
-      @self.pg.production('exp : NUMERO MENOS NUMERO | DIGITO MENOS NUMERO | NUMERO MENOS DIGITO | DIGITO MENOS DIGITO')
-      @self.pg.production('exp : NUMERO VEZES NUMERO | DIGITO VEZES NUMERO | NUMERO VEZES DIGITO | DIGITO VEZES DIGITO')
-      @self.pg.production('exp : NUMERO DIVISAO NUMERO | DIGITO DIVISAO NUMERO | NUMERO DIVISAO DIGITO | DIGITO DIVISAO DIGITO')
-      @self.pg.production('exp : NUMERO MENOR NUMERO | DIGITO MENOR NUMERO | NUMERO MENOR DIGITO | DIGITO MENOR DIGITO')
-      @self.pg.production('exp : NUMERO MENORIGUAL NUMERO | DIGITO MENORIGUAL NUMERO | NUMERO MENORIGUAL DIGITO | DIGITO MENORIGUAL DIGITO')
-      @self.pg.production('exp : NUMERO MAIOR NUMERO | DIGITO MAIOR NUMERO | NUMERO MAIOR DIGITO | DIGITO MAIOR DIGITO')
-      @self.pg.production('exp : NUMERO MAIORIGUAL NUMERO | DIGITO MAIORIGUAL NUMERO | NUMERO MAIORIGUAL DIGITO | DIGITO MAIORIGUAL DIGITO')
-      @self.pg.production('exp : NUMERO IGUAL NUMERO | DIGITO IGUAL NUMERO | NUMERO IGUAL DIGITO | DIGITO IGUAL DIGITO')
-      @self.pg.production('exp : NUMERO DIFERENTE NUMERO | DIGITO DIFERENTE NUMERO | NUMERO DIFERENTE DIGITO | DIGITO DIFERENTE DIGITO')
+      #@self.pg.production('exp : NUMERO MAIS exp | DIGITO MAIS exp | NUMERO MENOS exp | DIGITO MENOS exp | NUMERO DIVISAO exp | DIGITO DIVISAO exp')
+      @self.pg.production('exp : DIGITO | NUMERO')
+      @self.pg.production('exp : exp MAIS exp | exp MAIS exp | exp MAIS exp | exp MAIS exp')
+      @self.pg.production('exp : exp MENOS exp | exp MENOS exp | exp MENOS exp | exp MENOS exp')
+      @self.pg.production('exp : exp VEZES exp | exp VEZES exp | exp VEZES exp | exp VEZES exp')
+      @self.pg.production('exp : exp DIVISAO exp | exp DIVISAO exp | exp DIVISAO exp | exp DIVISAO exp')
+      @self.pg.production('exp : exp MENOR exp | exp MENOR exp | exp MENOR exp | exp MENOR exp')
+      @self.pg.production('exp : exp MENORIGUAL exp | exp MENORIGUAL exp | exp MENORIGUAL exp | exp MENORIGUAL exp')
+      @self.pg.production('exp : exp MAIOR exp | exp MAIOR exp | exp MAIOR exp | exp MAIOR exp')
+      @self.pg.production('exp : exp MAIORIGUAL exp | exp MAIORIGUAL exp | exp MAIORIGUAL exp | exp MAIORIGUAL exp')
+      @self.pg.production('exp : exp IGUAL exp | exp IGUAL exp | exp IGUAL exp | exp IGUAL exp')
+      @self.pg.production('exp : exp DIFERENTE exp | exp DIFERENTE exp | exp DIFERENTE exp | exp DIFERENTE exp')
       @self.pg.production('exp : exp OU exp | exp OU exp | exp OU exp | exp OU exp')
       @self.pg.production('exp : exp E exp | exp E exp | exp E exp | exp E exp')
       def exp(p):
-         if p[0].name == 'OU' or p[0].name == 'E':
-            print("foiexp1")
-            exp = ExpEOu(p[0], p[2], p[1])
-            exp.valor = p[1]
-            exp.filhos.append(p[0])
-            exp.filhos.append(p[2])
-            return(exp)
+         print("aqui",len(p))
+         if len(p) > 1:
+            if p[1].name == 'OU' or p[1].name == 'E':
+               print("foiexp1")
+               exp = ExpEOu(p[0], p[2], p[1])
+               exp.valor = p[1]
+               exp.filhos.append(p[0])
+               exp.filhos.append(p[2])
+               return(exp)
+            else:
+               print("foiexp2")
+               exp = Exsp(p[0], p[2], p[1])
+               exp.valor = p[1]
+               exp.filhos.append(p[0])
+               exp.filhos.append(p[2])
+               return(exp)
+            #elif p[1].name == 'DIGITO' or p[1].name == 'NUMERO':
          else:
-            print("foiexp2")
-            exp = Exsp(p[0], p[2], p[1])
-            exp.valor = p[1]
-            exp.filhos.append(p[0])
-            exp.filhos.append(p[2])
+            print("foiexp3")
+            exp = ExpNum(p[0])
+            exp.valor = p[0]
+            exp.irmaos.append(p[0])
             return(exp)
 
    def get_parser(self):

@@ -179,3 +179,15 @@ class ExpEOu(BaseBox):
 
     def eval(self):
         return [self.exp_left , self.exp_right] 
+
+class ExpNum(BaseBox):
+    
+    def __init__(self, token):
+        self.token = token
+        self.tipo = 'ExpNum'
+        self.valor = token
+        self.filhos = []
+        self.irmaos = []
+
+    def eval(self):
+        return [self.exp_left , self.exp_right] 
