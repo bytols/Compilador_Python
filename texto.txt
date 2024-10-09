@@ -2,4 +2,6 @@ real aquiles;
 inteiro felpes;
 real joga, muito;
 
+enquanto (12 == 10)  mostrar(compilador);
 se 12 == 10 entao mostrar(compilador);
+se 12 == 10 entao mostrar(compilador) senao mostrar(compilador);
