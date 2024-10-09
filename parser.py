@@ -87,15 +87,18 @@ class Parser():
             seqComando.filhos.append(p[0])
             return(seqComando)
          
-      @self.pg.production('comando : SE  exp  ENTAO acao | SE  exp  ENTAO acao SENAO acao')
+      @self.pg.production('comando : SE  exp  ENTAO acao SENAO acao')
+      @self.pg.production('comando : SE  exp  ENTAO acao ')
       @self.pg.production('comando : ENQUANTO ABREPARENTESES exp FECHAPARENTESES acao')
-      @self.pg.production('comando : REPITA exp ATE acao ')
+      @self.pg.production('comando : REPITA acao ATE exp ')
       @self.pg.production('comando : LER ABREPARENTESES ID FECHAPARENTESES PONTOVIRGULA')
       @self.pg.production('comando : MOSTRAR ABREPARENTESES ID FECHAPARENTESES PONTOVIRGULA')
       @self.pg.production('comando : ID ATRIBUICAO exp PONTOVIRGULA')
       def comando(p):
          if p[0].value == 'se':
-            if len(p) == 3:
+            print('aqui a quantidade:' ,len(p))
+            print("até aqui foi")
+            if len(p) > 4:
                seentaosenao = ComandoSe(p[1], p[3], p[5])
                seentaosenao.filhos.append(p[1])
                seentaosenao.filhos.append(p[3])
@@ -105,6 +108,7 @@ class Parser():
             else:
                seentaosenao = ComandoSe(p[1], p[3])
                seentaosenao.tipo = 'se-entao'
+               seentaosenao.valor = 'se-entao'
                seentaosenao.filhos.append(p[1])
                seentaosenao.filhos.append(p[3])
                print("foise2")
@@ -118,26 +122,33 @@ class Parser():
             comandoRepita = ComandoRepita(p[1],p[3])
             comandoRepita.filhos.append(p[1])
             comandoRepita.filhos.append(p[3])
-            return(comandoEnquanto)
+            return(comandoRepita)
          elif p[0].value == 'ler':
             comandoLer = ComandoLer(p[2])
+            comandoLer.filhos.append(p[2])
             return(comandoLer)
          elif p[0].value == 'mostrar':
             comandoMostrar = ComandoMostrar(p[2])
+            comandoMostrar.filhos.append(p[2])
+            print("ainn mostrei")
             return(comandoMostrar)
          elif p[1].value == '=':
             comandoAtribuir = ComandoAtribuir(p[0], p[2])
+            comandoAtribuir.filhos.append(p[0])
+            #comandoAtribuir.filhos.append(p[1]) será que precisa?
             comandoAtribuir.filhos.append(p[2])
             return(comandoAtribuir)
          
-      @self.pg.production('acao : ABREPARENTESES seqComando FECHAPARENTESES')
+      @self.pg.production('acao : ABRECH seqComando FECHACH')
       @self.pg.production('acao : comando')
       def acao(p):
          if len(p) == 3:
             acao = p[0]
+            print("foiacao")
             return(acao)
          else:
             acao = Acao(p[0])
+            print("foiacao2")
             acao.filhos.append(p[0])
             return(acao)
          
@@ -165,6 +176,8 @@ class Parser():
             print("foiexp2")
             exp = Exsp(p[0], p[2], p[1])
             exp.valor = p[1]
+            exp.filhos.append(p[0])
+            exp.filhos.append(p[2])
             return(exp)
 
    def get_parser(self):

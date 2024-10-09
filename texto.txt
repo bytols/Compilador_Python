@@ -2,6 +2,9 @@ real aquiles;
 inteiro felpes;
 real joga, muito;
 
-enquanto (12 == 10)  mostrar(compilador);
-se 12 == 10 entao mostrar(compilador);
-se 12 == 10 entao mostrar(compilador) senao mostrar(compilador);
+se 12 == 10 entao { mostrar(compilador); mostrar(abigobaldo); } 
+se 12 == 10 entao mostrar(compilador); senao mostrar(adedonha);
+enquanto (10 + 12) mostrar(arroz);
+repita mostrar(farofa); ate 13 - 12
+mostrar(compilador);
+feijoada = 15 + 2;

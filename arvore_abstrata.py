@@ -72,7 +72,7 @@ class ComandoSe(BaseBox):
         self.acao = acao
         self.acao_else = acao_else
         self.tipo = 'se-entao-senao'
-        self.valor = "se-entao"
+        self.valor = "se-entao-senao"
         self.filhos = []
         self.irmaos = []
 
@@ -112,7 +112,7 @@ class ComandoLer(BaseBox):
 
     def __init__(self, id):
         self.tipo = 'Ler'
-        self.valor = id
+        self.valor = 'Ler'
         self.filhos = []
         self.irmaos = []
 
@@ -123,7 +123,7 @@ class ComandoMostrar(BaseBox):
 
     def __init__(self, id):
         self.tipo = 'Mostrar'
-        self.valor = id
+        self.valor = 'Mostrar'
         self.filhos = []
         self.irmaos = []
 
@@ -132,10 +132,10 @@ class ComandoMostrar(BaseBox):
 
 class ComandoAtribuir(BaseBox):
 
-    def __init__(self, exp, id):
+    def __init__(self, id, exp):
         self.exp = exp
         self.tipo = 'Atribuir'
-        self.valor = id
+        self.valor = 'Atribuir'
         self.filhos = []
         self.irmaos = []
 
