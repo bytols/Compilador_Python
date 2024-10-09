@@ -151,7 +151,8 @@ class Parser():
             print("foiacao2")
             acao.filhos.append(p[0])
             return(acao)
-         
+      
+      @self.pg.production('exp : NUMERO MAIS exp | DIGITO MAIS exp | NUMERO MENOS exp | DIGITO MENOS exp | NUMERO DIVISAO exp | DIGITO DIVISAO exp')
       @self.pg.production('exp : NUMERO MAIS NUMERO | DIGITO MAIS NUMERO | NUMERO MAIS DIGITO | DIGITO MAIS DIGITO')
       @self.pg.production('exp : NUMERO MENOS NUMERO | DIGITO MENOS NUMERO | NUMERO MENOS DIGITO | DIGITO MENOS DIGITO')
       @self.pg.production('exp : NUMERO VEZES NUMERO | DIGITO VEZES NUMERO | NUMERO VEZES DIGITO | DIGITO VEZES DIGITO')
