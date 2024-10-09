@@ -1,5 +1,5 @@
 from lexer import Lexer
-from parser import Parser
+from parser_1 import Parser
 from print_tree import print_tree
 
 lex = Lexer()
