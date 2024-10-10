@@ -10,6 +10,7 @@ Como inicializar
         - Win: venv/Scripts/activate // MacOS:  source venv/bin/activate
     - dentro do ambiente virtual instale o rply
         - no terminal: pip install rply 
+        - (ou) no terminal: pip install -r requirements.txt
     - agora dentro da pasta que foi clonado e com o ambiente virtual ativado execute no terminal: python main.py
         - esse comando ira compilar o arquivo main que ira chamar o analisador léxico e sintático
 
