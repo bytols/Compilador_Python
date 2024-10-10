@@ -52,12 +52,10 @@ class Lexer():
         l = self.lg.build()
         with open(txt) as file:
             arquivo = file.read()
-            print(arquivo)
         for token in l.lex(arquivo):
             print(token)
             if token.name == 'NEWLINE':
                 self.newline += 1
-        print(self.newline)
         return(l.lex(arquivo))
         
 

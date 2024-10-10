@@ -14,11 +14,11 @@ class Parser():
          'NUMERO','NUMERO_REAL','LETRA','ID','NEWLINE','PONTOVIRGULA','ABREPARENTESES','FECHAPARENTESES','ABRECH', 'FECHACH', 'SEPARADOR'],
          
          precedence=[
-            ('left', ['OU']),
-            ('left', ['E']),
-            ('left', ['MENOR','MAIOR','MENORIGUAL','MAIORIGUAL','IGUAL','DIFERENTE']),
             ('left', ['MAIS' , 'MENOS']),
-            ('left', ['VEZES', 'DIVISAO']),        
+            ('left', ['VEZES', 'DIVISAO']),    
+            ('left', ['MENOR','MAIOR','MENORIGUAL','MAIORIGUAL','IGUAL','DIFERENTE']),
+            ('left', ['E']),
+            ('left', ['OU']),
          ])
 
 
@@ -29,7 +29,6 @@ class Parser():
          programa = Programa(p[0] , p[1])
          programa.filhos.append(p[0])
          programa.filhos.append(p[1])
-         print("AA",programa.filhos)
          return programa
       @self.pg.production('declaracaoVariaveis : declaracaoVariaveis declaracoes PONTOVIRGULA')
       @self.pg.production('declaracaoVariaveis : declaracoes PONTOVIRGULA')
@@ -57,7 +56,6 @@ class Parser():
             declaracoes = Declaracoes(p[1])
             declaracoes.valor = (p[0])
             declaracoes.filhos.append(p[1])
-            print("final da arvore2:",p)
             return(declaracoes)
       
       @self.pg.production('listaIdentificador : listaIdentificador VIRGULA ID')
@@ -79,11 +77,9 @@ class Parser():
          if len(p) == 2:
             seqComando = p[0]
             seqComando.filhos.append(p[1])
-            print("foiseqcomando")
             return(seqComando)
          else:
             seqComando = SeqComando(p[0])
-            print("foiseqcomando2")
             seqComando.filhos.append(p[0])
             return(seqComando)
          
@@ -96,14 +92,11 @@ class Parser():
       @self.pg.production('comando : ID ATRIBUICAO exp PONTOVIRGULA')
       def comando(p):
          if p[0].value == 'se':
-            print('aqui a quantidade:' ,len(p))
-            print("até aqui foi")
             if len(p) > 4:
                seentaosenao = ComandoSe(p[1], p[3], p[5])
                seentaosenao.filhos.append(p[1])
                seentaosenao.filhos.append(p[3])
                seentaosenao.filhos.append(p[5])
-               print("foise")
                return(seentaosenao)
             else:
                seentaosenao = ComandoSe(p[1], p[3])
@@ -111,7 +104,6 @@ class Parser():
                seentaosenao.valor = 'se-entao'
                seentaosenao.filhos.append(p[1])
                seentaosenao.filhos.append(p[3])
-               print("foise2")
                return(seentaosenao)
          elif p[0].value == 'enquanto':
             comandoEnquanto = ComandoEnquanto(p[2],p[4])
@@ -130,7 +122,6 @@ class Parser():
          elif p[0].value == 'mostrar':
             comandoMostrar = ComandoMostrar(p[2])
             comandoMostrar.filhos.append(p[2])
-            print("ainn mostrei")
             return(comandoMostrar)
          elif p[1].value == '=':
             comandoAtribuir = ComandoAtribuir(p[0], p[2])
@@ -144,51 +135,42 @@ class Parser():
       def acao(p):
          if len(p) == 3:
             acao = p[0]
-            print("foiacao")
             return(acao)
          else:
             acao = Acao(p[0])
-            print("foiacao2")
             acao.filhos.append(p[0])
             return(acao)
       
-      #@self.pg.production('exp : NUMERO MAIS exp | DIGITO MAIS exp | NUMERO MENOS exp | DIGITO MENOS exp | NUMERO DIVISAO exp | DIGITO DIVISAO exp')
       @self.pg.production('exp : DIGITO | NUMERO')
-      @self.pg.production('exp : exp MAIS exp | exp MAIS exp | exp MAIS exp | exp MAIS exp')
-      @self.pg.production('exp : exp MENOS exp | exp MENOS exp | exp MENOS exp | exp MENOS exp')
-      @self.pg.production('exp : exp VEZES exp | exp VEZES exp | exp VEZES exp | exp VEZES exp')
-      @self.pg.production('exp : exp DIVISAO exp | exp DIVISAO exp | exp DIVISAO exp | exp DIVISAO exp')
-      @self.pg.production('exp : exp MENOR exp | exp MENOR exp | exp MENOR exp | exp MENOR exp')
-      @self.pg.production('exp : exp MENORIGUAL exp | exp MENORIGUAL exp | exp MENORIGUAL exp | exp MENORIGUAL exp')
-      @self.pg.production('exp : exp MAIOR exp | exp MAIOR exp | exp MAIOR exp | exp MAIOR exp')
-      @self.pg.production('exp : exp MAIORIGUAL exp | exp MAIORIGUAL exp | exp MAIORIGUAL exp | exp MAIORIGUAL exp')
-      @self.pg.production('exp : exp IGUAL exp | exp IGUAL exp | exp IGUAL exp | exp IGUAL exp')
-      @self.pg.production('exp : exp DIFERENTE exp | exp DIFERENTE exp | exp DIFERENTE exp | exp DIFERENTE exp')
-      @self.pg.production('exp : exp OU exp | exp OU exp | exp OU exp | exp OU exp')
-      @self.pg.production('exp : exp E exp | exp E exp | exp E exp | exp E exp')
+      @self.pg.production('exp : exp MAIS exp')
+      @self.pg.production('exp : exp MENOS exp')
+      @self.pg.production('exp : exp VEZES exp ')
+      @self.pg.production('exp : exp DIVISAO exp')
+      @self.pg.production('exp : exp MENOR exp')
+      @self.pg.production('exp : exp MENORIGUAL exp')
+      @self.pg.production('exp : exp MAIOR exp')
+      @self.pg.production('exp : exp MAIORIGUAL exp')
+      @self.pg.production('exp : exp IGUAL exp ')
+      @self.pg.production('exp : exp DIFERENTE exp')
+      @self.pg.production('exp : exp OU exp ')
+      @self.pg.production('exp : exp E exp')
       def exp(p):
-         print("aqui",len(p))
          if len(p) > 1:
             if p[1].name == 'OU' or p[1].name == 'E':
-               print("foiexp1")
                exp = ExpEOu(p[0], p[2], p[1])
                exp.valor = p[1]
                exp.filhos.append(p[0])
                exp.filhos.append(p[2])
                return(exp)
             else:
-               print("foiexp2")
                exp = Exsp(p[0], p[2], p[1])
                exp.valor = p[1]
                exp.filhos.append(p[0])
                exp.filhos.append(p[2])
                return(exp)
-            #elif p[1].name == 'DIGITO' or p[1].name == 'NUMERO':
          else:
-            print("foiexp3")
             exp = ExpNum(p[0])
             exp.valor = p[0]
-            exp.irmaos.append(p[0])
             return(exp)
 
    def get_parser(self):
