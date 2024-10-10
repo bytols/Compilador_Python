@@ -9,6 +9,7 @@ tokens = lex.lexer("texto.txt")
 pars.parse()
 syntax = pars.get_parser()
 tree = syntax.parse(tokens)
+open("results.txt" , 'w').close()
 print_tree(tree)
 
 

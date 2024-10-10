@@ -1,0 +1,19 @@
+Pré-Requisitos
+    - Python instalado
+    - Biblioteca rply instalada
+
+Como inicializar
+    - clone o repositório em uma pasta
+    - crie um ambiente virtual python para instalar as dependências
+        - no terminal utiliza o comando: python -m venv venv
+    - ative o ambiente virtual que acabou de ser criado
+        - Win: venv/Scripts/activate // MacOS:  source venv/bin/activate
+    - dentro do ambiente virtual instale o rply
+        - no terminal: pip install rply 
+    - agora dentro da pasta que foi clonado e com o ambiente virtual ativado execute no terminal: python main.py
+        - esse comando ira compilar o arquivo main que ira chamar o analisador léxico e sintático
+
+Como utilizar o Programa
+    - você pode escrever o código que quiser no arquivo.txt na linguagem p- (já, tem um código escrito)!
+    - a analise léxica ira ser exibida no terminal e também a árvore sintática.
+    - além disse a arvoré sintática será escrita no arquivo results.txt

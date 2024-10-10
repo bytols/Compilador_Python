@@ -1,1 +1,63 @@
-Programaando'MENOS', '-')')3')
+Programa
+  DeclaracaoVariaveis
+    Token('REAL', 'real')
+      Token('ID', 'aquiles')
+    Token('INTEIRO', 'inteiro')
+      Token('ID', 'felpes')
+    Token('REAL', 'real')
+      Token('ID', 'joga')
+      Token('ID', 'muito')
+  SeqComando
+    se-entao
+      Token('IGUAL', '==')
+        Token('NUMERO', '12')
+        Token('NUMERO', '10')
+      SeqComando
+        Mostrar
+          Token('ID', 'compilador')
+    se-entao-senao
+      Token('IGUAL', '==')
+        Token('NUMERO', '12')
+        Token('NUMERO', '10')
+      Acao
+        Mostrar
+          Token('ID', 'compilador')
+      Acao
+        Mostrar
+          Token('ID', 'adedonha')
+    Enquanto
+      Token('MAIS', '+')
+        Token('NUMERO', '10')
+        Token('NUMERO', '12')
+      Acao
+        Mostrar
+          Token('ID', 'arroz')
+    Repita-Enquanto
+      Acao
+        Mostrar
+          Token('ID', 'farofa')
+      Token('MENOS', '-')
+        Token('NUMERO', '13')
+        Token('NUMERO', '12')
+    Mostrar
+      Token('ID', 'compilador')
+    Atribuir
+      Token('ID', 'feijoada')
+      Token('MAIS', '+')
+        Token('DIGITO', '2')
+        Token('DIGITO', '2')
+    Atribuir
+      Token('ID', 'acaraje')
+      Token('MENOS', '-')
+        Token('NUMERO', '15')
+        Token('VEZES', '*')
+          Token('VEZES', '*')
+            Token('DIVISAO', '/')
+              Token('DIGITO', '2')
+              Token('DIGITO', '2')
+            Token('MAIOR', '>')
+              Token('OU', '||')
+                Token('DIGITO', '4')
+                Token('DIGITO', '3')
+              Token('DIGITO', '4')
+          Token('DIGITO', '3')

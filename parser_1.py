@@ -32,15 +32,20 @@ class Parser():
          return programa
       @self.pg.production('declaracaoVariaveis : declaracaoVariaveis declaracoes PONTOVIRGULA')
       @self.pg.production('declaracaoVariaveis : declaracoes PONTOVIRGULA')
+      @self.pg.production('declaracaoVariaveis : ')
       def declaracaoVariaveis(p):
          if len(p) == 3:
             declaracaoVariaveis = p[0]
             declaracaoVariaveis.filhos.append(p[1])
             return(declaracaoVariaveis)
-         else:
+         elif len(p) == 2:
             declaracaoVariaveis = DeclaracaoVariaveis(p[0])
             declaracaoVariaveis.filhos.append(p[0])
             return(declaracaoVariaveis)
+         else:
+            declaracaoVariaveis = DeclaracaoVariaveis(p)
+            return(declaracaoVariaveis)
+
 
       @self.pg.production('declaracoes : INTEIRO declaracoes listaIdentificador')
       @self.pg.production('declaracoes : REAL declaracoes listaIdentificador')
@@ -73,15 +78,20 @@ class Parser():
 
       @self.pg.production('seqComando : seqComando comando')
       @self.pg.production('seqComando : comando')
+      @self.pg.production('seqComando :')
       def seqComando(p):
          if len(p) == 2:
             seqComando = p[0]
             seqComando.filhos.append(p[1])
             return(seqComando)
-         else:
+         elif len(p) == 1:
             seqComando = SeqComando(p[0])
             seqComando.filhos.append(p[0])
             return(seqComando)
+         else:
+            seqComando = SeqComando(p)
+            return(seqComando)
+            
          
       @self.pg.production('comando : SE  exp  ENTAO acao SENAO acao')
       @self.pg.production('comando : SE  exp  ENTAO acao ')
@@ -134,7 +144,7 @@ class Parser():
       @self.pg.production('acao : comando')
       def acao(p):
          if len(p) == 3:
-            acao = p[0]
+            acao = p[1]
             return(acao)
          else:
             acao = Acao(p[0])
