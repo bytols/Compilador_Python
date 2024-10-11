@@ -1,8 +1,12 @@
 from rply.token import BaseBox
 
 
+# definindo as classes que representam os não termians que serão os nós das arvores
 class Programa(BaseBox):
 
+    #classe init qeu recebe seus não terminais , e as vezes seus não terminais case seja um id ou algo relevante...
+    # também define seu tipo e valor, que representa o tipo de nó que é
+    # também define as listas que receberão outros nós irmãos e filhos!
     def __init__(self, declaracaoVariaveis,seqComando) -> None:
         self.declaracaoVariaveis = declaracaoVariaveis
         self.seqComando = seqComando
@@ -11,9 +15,11 @@ class Programa(BaseBox):
         self.filhos = []
         self.irmaos = []
 
+    # função eval que retorna os não terminais da regra de produçaõ!
     def eval(self):
         return [self.declaracaoVariaveis , self.seqComando]
     
+    # o resto da classe segue essa linha!
 class DeclaracaoVariaveis(BaseBox):
 
     def __init__(self, declaracao, proxima_declaracao=None ) -> None:

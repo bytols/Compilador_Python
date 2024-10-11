@@ -1,12 +1,14 @@
 from rply import LexerGenerator
 
-
+# classe que representa o Lexer!
 class Lexer():
 
     def __init__(self) -> None:
         self.newline = 0
+        # define o analisador lexico
         self.lg = LexerGenerator()
 
+# define os lexemas
     def add_lexems(self) -> None:
 
         self.lg.add('VIRGULA' , r'\,')
@@ -47,6 +49,7 @@ class Lexer():
         self.lg.add('FECHACH' , r'}' )
         self.lg.ignore(r'\s+')
 
+    # metodo que lê os lexemas! ...
     def lexer(self, txt:str) -> None:
 
         l = self.lg.build()

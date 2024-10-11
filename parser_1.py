@@ -5,14 +5,17 @@ from lexer import Lexer
 lex = Lexer()
 lex.add_lexems()
 
+# classe que representa o parser (analisador sintático)
 class Parser():
 
    def __init__(self):
+      # definindo a tabela de simbolos!
       self.pg = ParserGenerator(
          ['INTEIRO','REAL','SE','ENTAO','SENAO','ENQUANTO','REPITA','ATE','LER','MOSTRAR','MAIS','MENOS',
          'VEZES','DIVISAO','E','OU','MENOR','MENORIGUAL', 'MAIOR', 'MAIORIGUAL', 'IGUAL','DIFERENTE','ATRIBUICAO','DIGITO', 'VIRGULA',
          'NUMERO','NUMERO_REAL','LETRA','ID','NEWLINE','PONTOVIRGULA','ABREPARENTESES','FECHAPARENTESES','ABRECH', 'FECHACH', 'SEPARADOR'],
          
+         #definindo a precedência, a ordem de precedência é ascendente, e é lida pela esquerda
          precedence=[
             ('left', ['MAIS' , 'MENOS']),
             ('left', ['VEZES', 'DIVISAO']),    
@@ -23,13 +26,24 @@ class Parser():
 
 
 
+   # aqui são definidas as regras de produção, que vieram da gramática
    def parse(self):
+
+      # decorador que representa a gramática
+      # toda função recebe um parametro p, que representa os valores a esquerda da regra de produção que podem ser um terminal ou um nó
       @self.pg.production('programa : declaracaoVariaveis seqComando')
       def programa(p):
+         # o conceito é que eu retorno um nó, que sera usada para manter uma arvoré do proprio rply, que é a arvore que avalia a sintática
+         
+         # o no é representado por uma classe que sempre recebe seus não terminais de sua regra de produção
          programa = Programa(p[0] , p[1])
+         #e seus nós não terminasi também são adicionaods ao nó pai como filhos e em outros caos irmão
          programa.filhos.append(p[0])
          programa.filhos.append(p[1])
+         #retorno do nó
          return programa
+      
+      # podem ser declarados mais de um decorador , para várias regras de produção para um mesmo não terminal
       @self.pg.production('declaracaoVariaveis : declaracaoVariaveis declaracoes PONTOVIRGULA')
       @self.pg.production('declaracaoVariaveis : declaracoes PONTOVIRGULA')
       @self.pg.production('declaracaoVariaveis : ')
@@ -46,7 +60,7 @@ class Parser():
             declaracaoVariaveis = DeclaracaoVariaveis(p)
             return(declaracaoVariaveis)
 
-
+      # o resto do código segue a mesma lógica apartir daqui!
       @self.pg.production('declaracoes : INTEIRO declaracoes listaIdentificador')
       @self.pg.production('declaracoes : REAL declaracoes listaIdentificador')
       @self.pg.production('declaracoes : INTEIRO listaIdentificador')
@@ -151,6 +165,7 @@ class Parser():
             acao.filhos.append(p[0])
             return(acao)
       
+      # aqui a precedência é definida lá emcima no primeiro metodo
       @self.pg.production('exp : DIGITO | NUMERO')
       @self.pg.production('exp : exp MAIS exp')
       @self.pg.production('exp : exp MENOS exp')
@@ -183,11 +198,9 @@ class Parser():
             exp.valor = p[0]
             return(exp)
 
+   # ultimo metodo para criar a arvore sintática!
    def get_parser(self):
       return self.pg.build()
-   
-   
-   #parser.parse(lex.lexer("texto.txt")).eval()
 
 
 

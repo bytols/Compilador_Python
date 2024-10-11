@@ -18,3 +18,7 @@ Como utilizar o Programa
     - você pode escrever o código que quiser no arquivo.txt na linguagem p- (já, tem um código escrito)!
     - a analise léxica ira ser exibida no terminal e também a árvore sintática.
     - além disse a arvoré sintática será escrita no arquivo results.txt
+
+Sobre os parsing error
+    - caso haja um erro no código, o compilador gerara uma erro (excpetion) é a ultima linha diz o parsing error.
+    - ex: rply.errors.ParsingError: (None, SourcePosition(idx=246, lineno=9, colno=21)) == id, linha do erro e coluna
