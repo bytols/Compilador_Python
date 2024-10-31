@@ -1,11 +1,17 @@
-real aquiles;
-inteiro felpes;
-real joga, muito;
+inteiro igt;
+real j;
 
-se 12 == 10 entao { mostrar(compilador);}
-se 12 == 10 entao mostrar(compilador); senao mostrar(adedonha);
-enquanto (10 + 12) mostrar(arroz);
-repita mostrar(farofa); ate 13 - 12
-mostrar(compilador);
-feijoada = 2 + 2;
-acaraje = 15 - 2 / 2 * 4 || 3 > 4 * 3;  
+i=3;
+ler(j);
+j23 = 7.14;
+se (i<=j || j!=10) entao {
+		i = j;
+		j = a+b+c*d;
+	}
+	senao
+		enquanto (i<j) {
+		  j = j + 1;
+		  j = a-b+c/d;
+		  a = 2*(a+1);
+		}
+mostrar (j);

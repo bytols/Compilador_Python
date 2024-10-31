@@ -107,8 +107,8 @@ class Parser():
             return(seqComando)
             
          
-      @self.pg.production('comando : SE  exp  ENTAO acao SENAO acao')
-      @self.pg.production('comando : SE  exp  ENTAO acao ')
+      @self.pg.production('comando : SE  exp  ENTAO acao SENAO acao | SE ABREPARENTESES exp FECHAPARENTESES ENTAO acao SENAO acao')
+      @self.pg.production('comando : SE  exp  ENTAO acao | SE ABREPARENTESES exp FECHAPARENTESES ENTAO acao ')
       @self.pg.production('comando : ENQUANTO ABREPARENTESES exp FECHAPARENTESES acao')
       @self.pg.production('comando : REPITA acao ATE exp ')
       @self.pg.production('comando : LER ABREPARENTESES ID FECHAPARENTESES PONTOVIRGULA')
@@ -166,7 +166,7 @@ class Parser():
             return(acao)
       
       # aqui a precedência é definida lá emcima no primeiro metodo
-      @self.pg.production('exp : DIGITO | NUMERO')
+      @self.pg.production('exp : DIGITO | NUMERO | NUMERO_REAL')
       @self.pg.production('exp : exp MAIS exp')
       @self.pg.production('exp : exp MENOS exp')
       @self.pg.production('exp : exp VEZES exp ')
