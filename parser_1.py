@@ -110,35 +110,58 @@ class Parser():
       @self.pg.production('comando : SE  exp  ENTAO acao SENAO acao | SE ABREPARENTESES exp FECHAPARENTESES ENTAO acao SENAO acao')
       @self.pg.production('comando : SE  exp  ENTAO acao | SE ABREPARENTESES exp FECHAPARENTESES ENTAO acao ')
       @self.pg.production('comando : ENQUANTO ABREPARENTESES exp FECHAPARENTESES acao')
-      @self.pg.production('comando : REPITA acao ATE exp ')
+      @self.pg.production('comando : REPITA acao ATE exp | REPITA acao ATE ABREPARENTESES exp FECHAPARENTESES')
       @self.pg.production('comando : LER ABREPARENTESES ID FECHAPARENTESES PONTOVIRGULA')
       @self.pg.production('comando : MOSTRAR ABREPARENTESES ID FECHAPARENTESES PONTOVIRGULA')
       @self.pg.production('comando : ID ATRIBUICAO exp PONTOVIRGULA')
       def comando(p):
          if p[0].value == 'se':
-            if len(p) > 4:
-               seentaosenao = ComandoSe(p[1], p[3], p[5])
-               seentaosenao.filhos.append(p[1])
-               seentaosenao.filhos.append(p[3])
-               seentaosenao.filhos.append(p[5])
-               return(seentaosenao)
+            if p[1].valor == '(':
+               print("arroz")
+               if len(p) > 6:
+                  print("feijao")
+                  seentaosenao = ComandoSe(p[2], p[4], p[6])
+                  seentaosenao.filhos.append(p[2])
+                  seentaosenao.filhos.append(p[4])
+                  seentaosenao.filhos.append(p[6])
+                  return(seentaosenao)
+               else:
+                  seentaosenao = ComandoSe(p[2], p[4])
+                  seentaosenao.tipo = 'se-entao'
+                  seentaosenao.valor = 'se-entao'
+                  seentaosenao.filhos.append(p[2])
+                  seentaosenao.filhos.append(p[4])
+                  return(seentaosenao)
             else:
-               seentaosenao = ComandoSe(p[1], p[3])
-               seentaosenao.tipo = 'se-entao'
-               seentaosenao.valor = 'se-entao'
-               seentaosenao.filhos.append(p[1])
-               seentaosenao.filhos.append(p[3])
-               return(seentaosenao)
+               if len(p) > 4:
+                  seentaosenao = ComandoSe(p[1], p[3], p[5])
+                  seentaosenao.filhos.append(p[1])
+                  seentaosenao.filhos.append(p[3])
+                  seentaosenao.filhos.append(p[5])
+                  return(seentaosenao)
+               else:
+                  seentaosenao = ComandoSe(p[1], p[3])
+                  seentaosenao.tipo = 'se-entao'
+                  seentaosenao.valor = 'se-entao'
+                  seentaosenao.filhos.append(p[1])
+                  seentaosenao.filhos.append(p[3])
+                  return(seentaosenao)
          elif p[0].value == 'enquanto':
             comandoEnquanto = ComandoEnquanto(p[2],p[4])
             comandoEnquanto.filhos.append(p[2])
             comandoEnquanto.filhos.append(p[4])
             return(comandoEnquanto)
          elif p[0].value == 'repita':
-            comandoRepita = ComandoRepita(p[1],p[3])
-            comandoRepita.filhos.append(p[1])
-            comandoRepita.filhos.append(p[3])
-            return(comandoRepita)
+            if p[0].value == '(':
+               comandoRepita = ComandoRepita(p[2],p[4])
+               comandoRepita.filhos.append(p[2])
+               comandoRepita.filhos.append(p[4])
+               return(comandoRepita)
+            else :
+               comandoRepita = ComandoRepita(p[1],p[3])
+               comandoRepita.filhos.append(p[1])
+               comandoRepita.filhos.append(p[3])
+               return(comandoRepita)
          elif p[0].value == 'ler':
             comandoLer = ComandoLer(p[2])
             comandoLer.filhos.append(p[2])
@@ -166,8 +189,8 @@ class Parser():
             return(acao)
       
       # aqui a precedência é definida lá emcima no primeiro metodo
-      @self.pg.production('exp : DIGITO | NUMERO | NUMERO_REAL')
-      @self.pg.production('exp : exp MAIS exp')
+      @self.pg.production('exp : DIGITO | NUMERO | NUMERO_REAL | ID')
+      @self.pg.production('exp : exp MAIS exp | ABREPARENTESES exp MAIS exp FECHAPARENTESES')
       @self.pg.production('exp : exp MENOS exp')
       @self.pg.production('exp : exp VEZES exp ')
       @self.pg.production('exp : exp DIVISAO exp')
@@ -180,7 +203,7 @@ class Parser():
       @self.pg.production('exp : exp OU exp ')
       @self.pg.production('exp : exp E exp')
       def exp(p):
-         if len(p) > 1:
+         if len(p) == 3:
             if p[1].name == 'OU' or p[1].name == 'E':
                exp = ExpEOu(p[0], p[2], p[1])
                exp.valor = p[1]
@@ -192,6 +215,19 @@ class Parser():
                exp.valor = p[1]
                exp.filhos.append(p[0])
                exp.filhos.append(p[2])
+               return(exp)
+         elif len(p) == 5:
+            if p[2].name == 'OU' or p[2].name == 'E':
+               exp = ExpEOu(p[1], p[3], p[2])
+               exp.valor = p[2]
+               exp.filhos.append(p[1])
+               exp.filhos.append(p[3])
+               return(exp)
+            else:
+               exp = Exsp(p[1], p[3], p[2])
+               exp.valor = p[2]
+               exp.filhos.append(p[1])
+               exp.filhos.append(p[3])
                return(exp)
          else:
             exp = ExpNum(p[0])

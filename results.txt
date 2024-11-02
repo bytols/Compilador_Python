@@ -1,63 +1,61 @@
 Programa
   DeclaracaoVariaveis
-    Token('REAL', 'real')
-      Token('ID', 'aquiles')
     Token('INTEIRO', 'inteiro')
-      Token('ID', 'felpes')
+      Token('ID', 'igt')
     Token('REAL', 'real')
-      Token('ID', 'joga')
-      Token('ID', 'muito')
+      Token('ID', 'j')
   SeqComando
-    se-entao
-      Token('IGUAL', '==')
-        Token('NUMERO', '12')
-        Token('NUMERO', '10')
-      SeqComando
-        Mostrar
-          Token('ID', 'compilador')
+    Atribuir
+      Token('ID', 'i')
+      Token('NUMERO', '3')
+    Ler
+      Token('ID', 'j')
+    Atribuir
+      Token('ID', 'j23 ')
+      Token('NUMERO_REAL', '7.14')
     se-entao-senao
-      Token('IGUAL', '==')
-        Token('NUMERO', '12')
-        Token('NUMERO', '10')
+      Token('MAIOR', '>')
+        Token('ID', 'i')
+        Token('ID', 'k')
+      SeqComando
+        Atribuir
+          Token('ID', 'i')
+          Token('ID', 'j')
+        Atribuir
+          Token('ID', 'j')
+          Token('MAIS', '+')
+            Token('MAIS', '+')
+              Token('ID', 'a')
+              Token('ID', 'b')
+            Token('VEZES', '*')
+              Token('ID', 'c')
+              Token('ID', 'd')
       Acao
-        Mostrar
-          Token('ID', 'compilador')
-      Acao
-        Mostrar
-          Token('ID', 'adedonha')
-    Enquanto
-      Token('MAIS', '+')
-        Token('NUMERO', '10')
-        Token('NUMERO', '12')
-      Acao
-        Mostrar
-          Token('ID', 'arroz')
-    Repita-Enquanto
-      Acao
-        Mostrar
-          Token('ID', 'farofa')
-      Token('MENOS', '-')
-        Token('NUMERO', '13')
-        Token('NUMERO', '12')
+        Enquanto
+          Token('MENOR', '<')
+            Token('ID', 'i')
+            Token('ID', 'j')
+          SeqComando
+            Atribuir
+              Token('ID', 'j')
+              Token('MAIS', '+')
+                Token('ID', 'j')
+                Token('NUMERO', '1')
+            Atribuir
+              Token('ID', 'j')
+              Token('MAIS', '+')
+                Token('MENOS', '-')
+                  Token('ID', 'a')
+                  Token('ID', 'b')
+                Token('DIVISAO', '/')
+                  Token('ID', 'c')
+                  Token('ID', 'd')
+            Atribuir
+              Token('ID', 'a')
+              Token('MAIS', '+')
+                Token('VEZES', '*')
+                  Token('NUMERO', '2')
+                  Token('ID', 'a')
+                Token('NUMERO', '1')
     Mostrar
-      Token('ID', 'compilador')
-    Atribuir
-      Token('ID', 'feijoada')
-      Token('MAIS', '+')
-        Token('DIGITO', '2')
-        Token('DIGITO', '2')
-    Atribuir
-      Token('ID', 'acaraje')
-      Token('MENOS', '-')
-        Token('NUMERO', '15')
-        Token('VEZES', '*')
-          Token('VEZES', '*')
-            Token('DIVISAO', '/')
-              Token('DIGITO', '2')
-              Token('DIGITO', '2')
-            Token('MAIOR', '>')
-              Token('OU', '||')
-                Token('DIGITO', '4')
-                Token('DIGITO', '3')
-              Token('DIGITO', '4')
-          Token('DIGITO', '3')
+      Token('ID', 'j')

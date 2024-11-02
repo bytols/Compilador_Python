@@ -15,3 +15,9 @@ se (i<=j || j!=10) entao {
 		  a = 2*(a+1);
 		}
 mostrar (j);
+
+         if p[0].name == 'ABREPARENTESES':
+            exp = ExpNum(p[1])
+            exp.filhos.append(p[1])
+            exp.valor = p[1]
+            return(exp) 
