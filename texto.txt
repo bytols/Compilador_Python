@@ -12,6 +12,6 @@ se i > k entao {
 		enquanto (i<j) {
 		  j = j + 1;
 		  j = a-b+c/d;
-		  a = 2*a+1;
+		  a = 2-(a+1) + (2+3) * 4 || 3;
 		}
 mostrar (j);

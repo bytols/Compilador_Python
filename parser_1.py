@@ -1,5 +1,5 @@
 from rply import ParserGenerator
-from arvore_abstrata import Programa, DeclaracaoVariaveis , SeqComando,Declaracoes, ListaIdentificador, ComandoAtribuir, ComandoEnquanto, ComandoLer, ComandoMostrar, ComandoRepita,ComandoSe, Acao, ExpEOu, Exsp, ExpNum
+from arvore_abstrata import Programa, DeclaracaoVariaveis , SeqComando,Declaracoes, ListaIdentificador, ComandoAtribuir, ComandoEnquanto, ComandoLer, ComandoMostrar, ComandoRepita,ComandoSe, Acao, ExpEOu, Exsp, ExpNum, ExpParenteses
 from lexer import Lexer
 
 lex = Lexer()
@@ -17,11 +17,12 @@ class Parser():
          
          #definindo a precedência, a ordem de precedência é ascendente, e é lida pela esquerda
          precedence=[
-            ('left', ['MAIS' , 'MENOS']),
-            ('left', ['VEZES', 'DIVISAO']),    
-            ('left', ['MENOR','MAIOR','MENORIGUAL','MAIORIGUAL','IGUAL','DIFERENTE']),
-            ('left', ['E']),
+            ('left', ['ABREPARENTESES']),
             ('left', ['OU']),
+            ('left', ['E']),
+            ('left', ['MENOR','MAIOR','MENORIGUAL','MAIORIGUAL','IGUAL','DIFERENTE']),
+            ('left', ['VEZES', 'DIVISAO']),   
+            ('left', ['MAIS' , 'MENOS']), 
          ])
 
 
@@ -107,10 +108,13 @@ class Parser():
             return(seqComando)
             
          
-      @self.pg.production('comando : SE  exp  ENTAO acao SENAO acao | SE ABREPARENTESES exp FECHAPARENTESES ENTAO acao SENAO acao')
-      @self.pg.production('comando : SE  exp  ENTAO acao | SE ABREPARENTESES exp FECHAPARENTESES ENTAO acao ')
+      @self.pg.production('comando : SE  exp  ENTAO acao SENAO acao')
+      @self.pg.production('comando : SE ABREPARENTESES exp FECHAPARENTESES ENTAO acao SENAO acao')
+      @self.pg.production('comando : SE  exp  ENTAO acao')
+      @self.pg.production('comando : SE ABREPARENTESES exp FECHAPARENTESES ENTAO acao')
       @self.pg.production('comando : ENQUANTO ABREPARENTESES exp FECHAPARENTESES acao')
-      @self.pg.production('comando : REPITA acao ATE exp | REPITA acao ATE ABREPARENTESES exp FECHAPARENTESES')
+      @self.pg.production('comando : REPITA acao ATE exp ')
+      @self.pg.production('comando : REPITA acao ATE ABREPARENTESES exp FECHAPARENTESES')
       @self.pg.production('comando : LER ABREPARENTESES ID FECHAPARENTESES PONTOVIRGULA')
       @self.pg.production('comando : MOSTRAR ABREPARENTESES ID FECHAPARENTESES PONTOVIRGULA')
       @self.pg.production('comando : ID ATRIBUICAO exp PONTOVIRGULA')
@@ -189,8 +193,9 @@ class Parser():
             return(acao)
       
       # aqui a precedência é definida lá emcima no primeiro metodo
+      @self.pg.production('exp : ABREPARENTESES exp FECHAPARENTESES')
       @self.pg.production('exp : DIGITO | NUMERO | NUMERO_REAL | ID')
-      @self.pg.production('exp : exp MAIS exp | ABREPARENTESES exp MAIS exp FECHAPARENTESES')
+      @self.pg.production('exp : exp MAIS exp')
       @self.pg.production('exp : exp MENOS exp')
       @self.pg.production('exp : exp VEZES exp ')
       @self.pg.production('exp : exp DIVISAO exp')
@@ -202,8 +207,10 @@ class Parser():
       @self.pg.production('exp : exp DIFERENTE exp')
       @self.pg.production('exp : exp OU exp ')
       @self.pg.production('exp : exp E exp')
+
+
       def exp(p):
-         if len(p) == 3:
+         if len(p) == 3 and (isinstance(p[0], ExpNum) or isinstance(p[0], ExpEOu) or isinstance(p[0], Exsp )): 
             if p[1].name == 'OU' or p[1].name == 'E':
                exp = ExpEOu(p[0], p[2], p[1])
                exp.valor = p[1]
@@ -211,28 +218,23 @@ class Parser():
                exp.filhos.append(p[2])
                return(exp)
             else:
+               print(p[1])
                exp = Exsp(p[0], p[2], p[1])
                exp.valor = p[1]
                exp.filhos.append(p[0])
                exp.filhos.append(p[2])
                return(exp)
-         elif len(p) == 5:
-            if p[2].name == 'OU' or p[2].name == 'E':
-               exp = ExpEOu(p[1], p[3], p[2])
-               exp.valor = p[2]
-               exp.filhos.append(p[1])
-               exp.filhos.append(p[3])
-               return(exp)
-            else:
-               exp = Exsp(p[1], p[3], p[2])
-               exp.valor = p[2]
-               exp.filhos.append(p[1])
-               exp.filhos.append(p[3])
-               return(exp)
          else:
-            exp = ExpNum(p[0])
-            exp.valor = p[0]
-            return(exp)
+            if len(p) == 3:
+               exp = ExpParenteses(p[1], p[0])
+               exp.valor = p[0]
+               print("\naqui:\n\n" , exp.valor)
+               exp.filhos.append(p[1])
+               return (exp)
+            else:
+               exp = ExpNum(p[0])
+               exp.valor = p[0]
+               return(exp)
 
    # ultimo metodo para criar a arvore sintática!
    def get_parser(self):
