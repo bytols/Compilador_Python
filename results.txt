@@ -5,13 +5,16 @@ Programa
       Token('ID', 'a')
       Token('ID', 'l')
       Token('ID', 'b')
-      Token('ID', 'c')
     Token('REAL', 'real')
       Token('ID', 'j')
       Token('ID', 'ki')
       Token('ID', 'malta')
+      Token('ID', 'z')
+      Token('ID', 'd')
+      Token('ID', 'c')
     Token('REAL', 'real')
       Token('ID', 'jopa')
+      Token('ID', 'i')
   SeqComando
     Atribuir
       Token('ID', 'j')
@@ -28,18 +31,16 @@ Programa
       SeqComando
         Atribuir
           Token('ID', 'j')
-          Token('MENOS', '-')
-            Token('ID', 'jay')
-            Token('ID', 'z')
+          Token('ID', 'z')
         Atribuir
           Token('ID', 'j')
-          Token('VEZES', '*')
+          Token('DIFERENTE', '!=')
             Token('MAIS', '+')
-              Token('MAIS', '+')
-                Token('ID', 'a')
-                Token('ID', 'b')
+              Token('ID', 'a')
+              Token('ID', 'b')
+            Token('VEZES', '*')
               Token('ID', 'c')
-            Token('ID', 'd')
+              Token('ID', 'd')
       Acao
         Enquanto
           Token('MENOR', '<')

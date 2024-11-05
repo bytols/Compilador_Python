@@ -1,13 +1,13 @@
-inteiro igt, a, l, b , c;
-real j, ki, malta;
-real jopa;
+inteiro igt, a, l, b;
+real j, ki, malta, z, d, c;
+real jopa, i;
 
 j=3;
 ler(j);
 j = 7.14;
 se l > l entao {
-		j = jay-z;
-		j = a+b+c*d;
+		j = z;
+		j = a+b != c*d;
 	}
 	senao
 		enquanto (i<j) {

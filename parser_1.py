@@ -83,8 +83,6 @@ class Parser():
       def listaIdentificador(p):
          if len(p) == 3:
             listaIdentificador = p[0]
-            print(type(p[0]))
-            print(type(p[2]))
             listaIdentificador.irmaos.append(p[2])
             return (listaIdentificador)
          else:
@@ -168,7 +166,6 @@ class Parser():
                return(comandoRepita)
          elif p[0].value == 'ler':
             comandoLer = ComandoLer(p[2])
-            print('vamos?',type(p[2]))
             comandoLer.filhos.append(p[2])
             return(comandoLer)
          elif p[0].value == 'mostrar':

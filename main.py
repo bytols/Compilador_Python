@@ -24,8 +24,8 @@ open("results.txt" , 'w').close()
 print_tree(tree)
 semantic = Semantic(tree)
 semantic.preencher_tabela(tree)
-print(semantic.lista_de_simbolos)
 semantic.checkar_variavel_nao_declarada(tree)
+semantic.checkar_expressao_booleana(tree)
 
 
 

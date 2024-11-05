@@ -1,5 +1,5 @@
 from typing import Type
-from arvore_abstrata import Programa, DeclaracaoVariaveis, SeqComando, ListaIdentificador, Declaracoes, Interfaceexp, ExpNum
+from arvore_abstrata import Programa, DeclaracaoVariaveis, SeqComando, ListaIdentificador, Declaracoes, Exsp, ExpNum
 from rply import Token, token
 
 class Semantic():
@@ -8,15 +8,32 @@ class Semantic():
         self.lista_de_simbolos = []
         self.treeRoot = treeRoot
 
+    def checkar_expressao_booleana(self,treeRoot, nivel = 0):
+        if treeRoot is None:
+            return
+        print(treeRoot)
+        if isinstance(treeRoot, Exsp) and (treeRoot.valor.value == '>' or treeRoot.valor.value == '<' or treeRoot.valor.value == '>=' or treeRoot.valor.value == '<=' or treeRoot.valor.value == '==' or treeRoot.valor.value == '!='):
+            if(treeRoot.exp_left.value) not in [s for sublist in self.lista_de_simbolos for s in sublist]:
+                raise ValueError(f'{treeRoot.exp_left.value}, não é booleano')
+        try:
+            for filho in treeRoot.filhos:
+                self.checkar_expressao_booleana(filho, nivel + 1)
+        except AttributeError:
+            pass
+
+        try:
+            for irmao in treeRoot.irmaos:
+                self.checkar_expressao_booleana(irmao , nivel)
+        except :
+            pass       
+
     def checkar_variavel_nao_declarada(self,treeRoot, nivel = 0):
         if treeRoot is None:
             return
         if isinstance(treeRoot, token.Token):
-            print("vamos?",treeRoot)
             if treeRoot.value not in [s for sublist in self.lista_de_simbolos for s in sublist]:
                 raise ValueError(f"{treeRoot.value} não foi declarada")
         if isinstance(treeRoot, ExpNum) and treeRoot.valor.name == 'ID':
-            print("vamos?",treeRoot)
             if treeRoot.valor.value not in [s for sublist in self.lista_de_simbolos for s in sublist]:
                 raise ValueError(f"{treeRoot.valor.value} não foi declarada")
         try:
