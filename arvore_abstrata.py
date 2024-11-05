@@ -1,6 +1,11 @@
 from rply.token import BaseBox
+from abc import ABC, abstractmethod
 
-
+class Interfaceexp(ABC):
+    @abstractmethod
+    def eval():
+        raise NotImplementedError
+    
 # definindo as classes que representam os não termians que serão os nós das arvores
 class Programa(BaseBox):
 
@@ -160,7 +165,7 @@ class Acao(BaseBox):
     def eval(self):
         return self.comando
     
-class Exsp(BaseBox):
+class Exsp(BaseBox, Interfaceexp):
 
     def __init__(self, left, right, token):
         self.exp_left = left
@@ -173,7 +178,7 @@ class Exsp(BaseBox):
     def eval(self):
         return [self.exp_left , self.exp_right] 
 
-class ExpEOu(BaseBox):
+class ExpEOu(BaseBox, Interfaceexp):
     
     def __init__(self, left, right, token):
         self.exp_left = left
@@ -186,7 +191,7 @@ class ExpEOu(BaseBox):
     def eval(self):
         return [self.exp_left , self.exp_right] 
     
-class ExpParenteses(BaseBox):
+class ExpParenteses(BaseBox, Interfaceexp):
     
     def __init__(self, exp ,token):
         self.exp = exp
@@ -198,7 +203,7 @@ class ExpParenteses(BaseBox):
     def eval(self):
         return self.exp 
 
-class ExpNum(BaseBox):
+class ExpNum(BaseBox, Interfaceexp):
     
     def __init__(self, token):
         self.token = token

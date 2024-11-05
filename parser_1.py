@@ -83,6 +83,8 @@ class Parser():
       def listaIdentificador(p):
          if len(p) == 3:
             listaIdentificador = p[0]
+            print(type(p[0]))
+            print(type(p[2]))
             listaIdentificador.irmaos.append(p[2])
             return (listaIdentificador)
          else:
@@ -121,9 +123,7 @@ class Parser():
       def comando(p):
          if p[0].value == 'se':
             if p[1].valor == '(':
-               print("arroz")
                if len(p) > 6:
-                  print("feijao")
                   seentaosenao = ComandoSe(p[2], p[4], p[6])
                   seentaosenao.filhos.append(p[2])
                   seentaosenao.filhos.append(p[4])
@@ -168,6 +168,7 @@ class Parser():
                return(comandoRepita)
          elif p[0].value == 'ler':
             comandoLer = ComandoLer(p[2])
+            print('vamos?',type(p[2]))
             comandoLer.filhos.append(p[2])
             return(comandoLer)
          elif p[0].value == 'mostrar':
@@ -218,7 +219,6 @@ class Parser():
                exp.filhos.append(p[2])
                return(exp)
             else:
-               print(p[1])
                exp = Exsp(p[0], p[2], p[1])
                exp.valor = p[1]
                exp.filhos.append(p[0])
@@ -228,7 +228,6 @@ class Parser():
             if len(p) == 3:
                exp = ExpParenteses(p[1], p[0])
                exp.valor = p[0]
-               print("\naqui:\n\n" , exp.valor)
                exp.filhos.append(p[1])
                return (exp)
             else:

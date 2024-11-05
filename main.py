@@ -1,7 +1,10 @@
 from lexer import Lexer
 from parser_1 import Parser
 from print_tree import print_tree
+from semantic_parser import Semantic
 
+#lista de simbolos
+lista_de_simbolos = []
 # defino o analisador léxico!
 lex = Lexer()
 # defino o analisador sintático!
@@ -19,6 +22,10 @@ tree = syntax.parse(tokens)
 open("results.txt" , 'w').close()
 # printa a arvore no texto...
 print_tree(tree)
+semantic = Semantic(tree)
+semantic.preencher_tabela(tree)
+print(semantic.lista_de_simbolos)
+semantic.checkar_variavel_nao_declarada(tree)
 
 
 

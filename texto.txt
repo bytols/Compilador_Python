@@ -1,17 +1,18 @@
-inteiro igt;
-real j;
+inteiro igt, a, l, b , c;
+real j, ki, malta;
+real jopa;
 
-i=3;
+j=3;
 ler(j);
-j23 = 7.14;
-se i > k entao {
-		i = j;
+j = 7.14;
+se l > l entao {
+		j = jay-z;
 		j = a+b+c*d;
 	}
 	senao
 		enquanto (i<j) {
 		  j = j + 1;
-		  j = a-b+c/d;
+		  j = d-b+c/d;
 		  a = 2-(a+1) + (2+3) * 4 || 3;
 		}
 mostrar (j);

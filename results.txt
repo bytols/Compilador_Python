@@ -2,25 +2,35 @@ Programa
   DeclaracaoVariaveis
     Token('INTEIRO', 'inteiro')
       Token('ID', 'igt')
+      Token('ID', 'a')
+      Token('ID', 'l')
+      Token('ID', 'b')
+      Token('ID', 'c')
     Token('REAL', 'real')
       Token('ID', 'j')
+      Token('ID', 'ki')
+      Token('ID', 'malta')
+    Token('REAL', 'real')
+      Token('ID', 'jopa')
   SeqComando
     Atribuir
-      Token('ID', 'i')
+      Token('ID', 'j')
       Token('NUMERO', '3')
     Ler
       Token('ID', 'j')
     Atribuir
-      Token('ID', 'j23 ')
+      Token('ID', 'j')
       Token('NUMERO_REAL', '7.14')
     se-entao-senao
       Token('MAIOR', '>')
-        Token('ID', 'i')
-        Token('ID', 'k')
+        Token('ID', 'l')
+        Token('ID', 'l')
       SeqComando
         Atribuir
-          Token('ID', 'i')
           Token('ID', 'j')
+          Token('MENOS', '-')
+            Token('ID', 'jay')
+            Token('ID', 'z')
         Atribuir
           Token('ID', 'j')
           Token('VEZES', '*')
@@ -46,7 +56,7 @@ Programa
               Token('DIVISAO', '/')
                 Token('MAIS', '+')
                   Token('MENOS', '-')
-                    Token('ID', 'a')
+                    Token('ID', 'd')
                     Token('ID', 'b')
                   Token('ID', 'c')
                 Token('ID', 'd')
