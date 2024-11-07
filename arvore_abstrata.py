@@ -225,7 +225,7 @@ class ConverterReal(BaseBox):
     def __init__(self, exp ,token):
         self.exp = exp
         self.tipo = "converter_real"
-        self.valor = token
+        self.valor = "converter_real"
         self.filhos = []
         self.irmaos = []
 
@@ -236,8 +236,8 @@ class Converter_Ints(BaseBox):
 
     def __init__(self, exp ,token):
         self.exp = exp
-        self.tipo = "converter_real"
-        self.valor = token
+        self.tipo = "converter_int"
+        self.valor = "converter_int"
         self.filhos = []
         self.irmaos = []
 

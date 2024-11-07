@@ -29,7 +29,7 @@ def concertar_exp(treenode, lista_simbolos):
             if any(valor in elemento for elemento in sublista):
                 if sublista[2] == "real":
                     temp = valor
-
+                    new_inter_node = ConverterReal()
                 else:
                     print(f'O valor "{valor}" está contido na sublista {sublista}, mas o primeiro elemento não é "real".')
                 break
