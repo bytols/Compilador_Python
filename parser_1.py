@@ -154,9 +154,9 @@ class Parser():
             comandoEnquanto.filhos.append(p[4])
             return(comandoEnquanto)
          elif p[0].value == 'repita':
-            if p[0].value == '(':
-               comandoRepita = ComandoRepita(p[2],p[4])
-               comandoRepita.filhos.append(p[2])
+            if p[3].value == '(':
+               comandoRepita = ComandoRepita(p[1],p[4])
+               comandoRepita.filhos.append(p[1])
                comandoRepita.filhos.append(p[4])
                return(comandoRepita)
             else :

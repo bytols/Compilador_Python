@@ -1,6 +1,43 @@
 from typing import Type
-from arvore_abstrata import Programa, DeclaracaoVariaveis, SeqComando, ListaIdentificador, Declaracoes, Exsp, ExpNum
+from arvore_abstrata import Declaracoes, Exsp, ExpNum, ComandoRepita, ComandoSe, ComandoEnquanto, InterfaceComando, ConverterReal
 from rply import Token, token
+def descer_exp(treenode, lista_simbolos):
+    if treenode is None:
+            return False
+    if isinstance(treenode, ExpNum):
+        valor = treenode.valor.value
+        for sublista in lista_simbolos:
+            if any(valor in elemento for elemento in sublista):
+                if sublista[2] == "real":
+                    return True
+                else:
+                    print(f'O valor "{valor}" está contido na sublista {sublista}, mas o primeiro elemento não é "real".')
+                break
+    try:
+        for filho in treenode.filhos:
+            descer_exp(filho, lista_simbolos)
+    except AttributeError:
+            pass
+    
+
+def concertar_exp(treenode, lista_simbolos):
+    if treenode is None:
+            return False
+    if isinstance(treenode, ExpNum):
+        valor = treenode.valor.value
+        for sublista in lista_simbolos:
+            if any(valor in elemento for elemento in sublista):
+                if sublista[2] == "real":
+                    temp = valor
+
+                else:
+                    print(f'O valor "{valor}" está contido na sublista {sublista}, mas o primeiro elemento não é "real".')
+                break
+    try:
+        for filho in treenode.filhos:
+            concertar_exp(filho, lista_simbolos)
+    except AttributeError:
+            pass
 
 class Semantic():
 
@@ -8,19 +45,43 @@ class Semantic():
         self.lista_de_simbolos = []
         self.treeRoot = treeRoot
 
+    def ajustar_arvore (self,treeRoot, nivel = 0):
+        if treeRoot is None:
+            return
+        #print(treeRoot)
+        real = None
+        if(isinstance(treeRoot,InterfaceComando )):
+            print(treeRoot)
+            real = descer_exp(treeRoot, self.lista_de_simbolos)
+            print("\nfim\n")
+        if  real == True:
+            concertar_exp(treeRoot, self.lista_de_simbolos)
+
+        try:
+            for filho in treeRoot.filhos:
+                self.ajustar_arvore(filho, nivel + 1)
+        except AttributeError:
+            pass
+        try:
+            for irmao in treeRoot.irmaos:
+                self.ajustar_arvore(irmao , nivel)
+        except :
+            pass       
+
     def checkar_expressao_booleana(self,treeRoot, nivel = 0):
         if treeRoot is None:
             return
-        print(treeRoot)
-        if isinstance(treeRoot, Exsp) and (treeRoot.valor.value == '>' or treeRoot.valor.value == '<' or treeRoot.valor.value == '>=' or treeRoot.valor.value == '<=' or treeRoot.valor.value == '==' or treeRoot.valor.value == '!='):
-            if(treeRoot.exp_left.value) not in [s for sublist in self.lista_de_simbolos for s in sublist]:
-                raise ValueError(f'{treeRoot.exp_left.value}, não é booleano')
+        if isinstance(treeRoot, ComandoEnquanto) or isinstance(treeRoot, ComandoSe):
+            if isinstance(treeRoot.filhos[0], Exsp) and treeRoot.filhos[0].valor.value not in {'>', '<', '>=', '<=', '==', '!='}:
+                raise ValueError(f'a exp de {treeRoot.tipo}, não é booleano')
+        if isinstance(treeRoot, ComandoRepita):
+            if isinstance(treeRoot.filhos[1], Exsp) and treeRoot.filhos[1].valor.value not in {'>', '<', '>=', '<=', '==', '!='}:
+                raise ValueError(f'a exp de {treeRoot.tipo}, não é booleano')
         try:
             for filho in treeRoot.filhos:
                 self.checkar_expressao_booleana(filho, nivel + 1)
         except AttributeError:
             pass
-
         try:
             for irmao in treeRoot.irmaos:
                 self.checkar_expressao_booleana(irmao , nivel)

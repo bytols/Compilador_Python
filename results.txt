@@ -25,7 +25,7 @@ Programa
       Token('ID', 'j')
       Token('NUMERO_REAL', '7.14')
     se-entao-senao
-      Token('MAIOR', '>')
+      Token('MENOR', '<')
         Token('ID', 'l')
         Token('ID', 'l')
       SeqComando
@@ -78,5 +78,12 @@ Programa
                         Token('NUMERO', '3')
                   Token('NUMERO', '4')
                 Token('NUMERO', '3')
+    Repita-Enquanto
+      SeqComando
+        Mostrar
+          Token('ID', 'a')
+      Token('MAIORIGUAL', '>=')
+        Token('ID', 'i')
+        Token('NUMERO', '1')
     Mostrar
       Token('ID', 'j')

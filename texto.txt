@@ -5,7 +5,7 @@ real jopa, i;
 j=3;
 ler(j);
 j = 7.14;
-se l > l entao {
+se l < l entao {
 		j = z;
 		j = a+b != c*d;
 	}
@@ -15,4 +15,7 @@ se l > l entao {
 		  j = d-b+c/d;
 		  a = 2-(a+1) + (2+3) * 4 || 3;
 		}
+repita {
+	mostrar(a);
+ } ate (i >= 1)
 mostrar (j);

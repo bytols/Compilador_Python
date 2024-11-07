@@ -6,6 +6,11 @@ class Interfaceexp(ABC):
     def eval():
         raise NotImplementedError
     
+class InterfaceComando(ABC):
+    @abstractmethod
+    def eval():
+        raise NotImplementedError
+    
 # definindo as classes que representam os não termians que serão os nós das arvores
 class Programa(BaseBox):
 
@@ -130,7 +135,7 @@ class ComandoLer(BaseBox):
     def eval(self):
         return([self.valor])
 
-class ComandoMostrar(BaseBox):
+class ComandoMostrar(BaseBox, InterfaceComando):
 
     def __init__(self, id):
         self.tipo = 'Mostrar'
@@ -141,7 +146,7 @@ class ComandoMostrar(BaseBox):
     def eval(self):
         return([self.valor])
 
-class ComandoAtribuir(BaseBox):
+class ComandoAtribuir(BaseBox, InterfaceComando):
 
     def __init__(self, id, exp):
         self.exp = exp
@@ -214,3 +219,27 @@ class ExpNum(BaseBox, Interfaceexp):
 
     def eval(self):
         return [self.exp_left , self.exp_right] 
+
+class ConverterReal(BaseBox):
+
+    def __init__(self, exp ,token):
+        self.exp = exp
+        self.tipo = "converter_real"
+        self.valor = token
+        self.filhos = []
+        self.irmaos = []
+
+    def eval(self):
+        return self.exp 
+    
+class Converter_Ints(BaseBox):
+
+    def __init__(self, exp ,token):
+        self.exp = exp
+        self.tipo = "converter_real"
+        self.valor = token
+        self.filhos = []
+        self.irmaos = []
+
+    def eval(self):
+        return self.exp 
