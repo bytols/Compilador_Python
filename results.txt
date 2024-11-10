@@ -51,7 +51,8 @@ Programa
               Token('ID', 'j')
               Token('MAIS', '+')
                 Token('ID', 'j')
-                Token('NUMERO', '1')
+                converter_real
+                  1.0
             Atribuir
               Token('ID', 'j')
               Token('DIVISAO', '/')
@@ -67,16 +68,21 @@ Programa
                 Token('VEZES', '*')
                   Token('MAIS', '+')
                     Token('MENOS', '-')
-                      Token('NUMERO', '2')
+                      converter_real
+                        2.0
                       Token('ABREPARENTESES', '(')
                         Token('MAIS', '+')
-                          Token('ID', 'a')
-                          Token('NUMERO', '1')
+                          converter_real
+                            a
+                          converter_real
+                            1.0
                     Token('ABREPARENTESES', '(')
                       Token('MAIS', '+')
-                        Token('NUMERO', '2')
+                        converter_real
+                          2.0
                         Token('NUMERO', '3')
-                  Token('NUMERO', '4')
+                  converter_real
+                    4.0
                 Token('NUMERO', '3')
     Repita-Enquanto
       SeqComando

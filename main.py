@@ -21,13 +21,13 @@ tree = syntax.parse(tokens)
 # deleta o conteudo vigiente no results.txt
 open("results.txt" , 'w').close()
 # printa a arvore no texto...
-print_tree(tree)
+#print_tree(tree)
 semantic = Semantic(tree)
 semantic.preencher_tabela(tree)
-print(semantic.lista_de_simbolos)
 semantic.checkar_variavel_nao_declarada(tree)
 semantic.checkar_expressao_booleana(tree)
 semantic.ajustar_arvore(tree)
+print_tree(tree)
 
 
 

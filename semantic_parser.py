@@ -1,6 +1,7 @@
 from typing import Type
 from arvore_abstrata import Declaracoes, Exsp, ExpNum, ComandoRepita, ComandoSe, ComandoEnquanto, InterfaceComando, ConverterReal
 from rply import Token, token
+import string
 def descer_exp(treenode, lista_simbolos):
     if treenode is None:
             return False
@@ -15,9 +16,11 @@ def descer_exp(treenode, lista_simbolos):
                 break
     try:
         for filho in treenode.filhos:
-            descer_exp(filho, lista_simbolos)
+            if descer_exp(filho, lista_simbolos):  # Propaga o True encontrado
+                return True
     except AttributeError:
-            pass
+        pass
+    return False
     
 
 def concertar_exp(treenode, lista_simbolos):
@@ -25,13 +28,33 @@ def concertar_exp(treenode, lista_simbolos):
             return False
     if isinstance(treenode, ExpNum):
         valor = treenode.valor.value
+        print("concertar" , treenode.valor)
         for sublista in lista_simbolos:
             if any(valor in elemento for elemento in sublista):
-                if sublista[2] == "real":
-                    temp = valor
-                    new_inter_node = ConverterReal()
+                if sublista[2] == "inteiro":
+                    if treenode.valor.value.isdigit():
+                        if treenode.tipo != "converter_real":
+                            new_node = ExpNum(float(treenode.valor.value))
+                            treenode.filhos = [new_node]
+                        treenode.valor = "converter_real"
+                        treenode.tipo = "converter_real"
+                        print("foi")
+                    else:
+                        for sublista in lista_simbolos:
+                            if len(sublista) > 1 and sublista[1] == treenode.valor.value:
+                                sublista[2] = 'real'
+                                lista_simbolos.remove(sublista)
+                                novo_elemento = sublista  
+                                lista_simbolos.append(novo_elemento)
+                                print("affs")
+                        if treenode.tipo != "converter_real":
+                            new_node = ExpNum(treenode.valor.value)
+                            treenode.filhos = [new_node]
+                        treenode.valor = "converter_real"
+                        treenode.tipo = "converter_real"
+                        print("foi2")
                 else:
-                    print(f'O valor "{valor}" está contido na sublista {sublista}, mas o primeiro elemento não é "real".')
+                    pass
                 break
     try:
         for filho in treenode.filhos:
@@ -48,14 +71,12 @@ class Semantic():
     def ajustar_arvore (self,treeRoot, nivel = 0):
         if treeRoot is None:
             return
-        #print(treeRoot)
         real = None
         if(isinstance(treeRoot,InterfaceComando )):
-            print(treeRoot)
-            real = descer_exp(treeRoot, self.lista_de_simbolos)
-            print("\nfim\n")
-        if  real == True:
-            concertar_exp(treeRoot, self.lista_de_simbolos)
+            temp_root = treeRoot
+            real = descer_exp(temp_root, self.lista_de_simbolos)
+        if  real:
+            concertar_exp(temp_root, self.lista_de_simbolos)
 
         try:
             for filho in treeRoot.filhos:

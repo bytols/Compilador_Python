@@ -222,7 +222,7 @@ class ExpNum(BaseBox, Interfaceexp):
 
 class ConverterReal(BaseBox):
 
-    def __init__(self, exp ,token):
+    def __init__(self, exp):
         self.exp = exp
         self.tipo = "converter_real"
         self.valor = "converter_real"
@@ -234,7 +234,7 @@ class ConverterReal(BaseBox):
     
 class Converter_Ints(BaseBox):
 
-    def __init__(self, exp ,token):
+    def __init__(self, exp):
         self.exp = exp
         self.tipo = "converter_int"
         self.valor = "converter_int"
