@@ -1,4 +1,4 @@
-inteiro igt, a, l, b;
+inteiro igt, a, b, l;
 real j, ki, malta, z, d, c;
 real jopa, i;
 

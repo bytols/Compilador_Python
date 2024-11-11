@@ -10,6 +10,7 @@ def descer_exp(treenode, lista_simbolos):
         for sublista in lista_simbolos:
             if any(valor in elemento for elemento in sublista):
                 if sublista[2] == "real":
+                    print(f"é real poha! {valor}")
                     return True
                 else:
                     print(f'O valor "{valor}" está contido na sublista {sublista}, mas o primeiro elemento não é "real".')
@@ -22,6 +23,12 @@ def descer_exp(treenode, lista_simbolos):
         pass
     return False
     
+def verificar_elemento(lista_simbolos, valor):
+    for sublista in lista_simbolos:
+        if len(sublista) > 2 and valor == sublista[1] and sublista[2] == "inteiro":
+            print(f"{valor} é inteiro msm!")
+            return True 
+    return False
 
 def concertar_exp(treenode, lista_simbolos):
     if treenode is None:
@@ -29,33 +36,20 @@ def concertar_exp(treenode, lista_simbolos):
     if isinstance(treenode, ExpNum):
         valor = treenode.valor.value
         print("concertar" , treenode.valor)
-        for sublista in lista_simbolos:
-            if any(valor in elemento for elemento in sublista):
-                if sublista[2] == "inteiro":
-                    if treenode.valor.value.isdigit():
-                        if treenode.tipo != "converter_real":
-                            new_node = ExpNum(float(treenode.valor.value))
-                            treenode.filhos = [new_node]
-                        treenode.valor = "converter_real"
-                        treenode.tipo = "converter_real"
-                        print("foi")
-                    else:
-                        for sublista in lista_simbolos:
-                            if len(sublista) > 1 and sublista[1] == treenode.valor.value:
-                                sublista[2] = 'real'
-                                lista_simbolos.remove(sublista)
-                                novo_elemento = sublista  
-                                lista_simbolos.append(novo_elemento)
-                                print("affs")
-                        if treenode.tipo != "converter_real":
-                            new_node = ExpNum(treenode.valor.value)
-                            treenode.filhos = [new_node]
-                        treenode.valor = "converter_real"
-                        treenode.tipo = "converter_real"
-                        print("foi2")
-                else:
-                    pass
-                break
+        if treenode.valor.value.isdigit():
+            if treenode.tipo != "converter_real":
+                new_node = ExpNum(float(treenode.valor.value))
+                treenode.filhos = [new_node]
+            treenode.valor = "converter_real"
+            treenode.tipo = "converter_real"
+            print("foi")
+        if verificar_elemento(lista_simbolos, valor):
+            if treenode.tipo != "converter_real":
+                new_node = ExpNum(treenode.valor.value)
+                treenode.filhos = [new_node]
+            treenode.valor = "converter_real"
+            treenode.tipo = "converter_real"
+            print("foi2")
     try:
         for filho in treenode.filhos:
             concertar_exp(filho, lista_simbolos)

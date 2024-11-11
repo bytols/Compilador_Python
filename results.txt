@@ -3,8 +3,8 @@ Programa
     Token('INTEIRO', 'inteiro')
       Token('ID', 'igt')
       Token('ID', 'a')
-      Token('ID', 'l')
       Token('ID', 'b')
+      Token('ID', 'l')
     Token('REAL', 'real')
       Token('ID', 'j')
       Token('ID', 'ki')
@@ -18,7 +18,8 @@ Programa
   SeqComando
     Atribuir
       Token('ID', 'j')
-      Token('NUMERO', '3')
+      converter_real
+        3.0
     Ler
       Token('ID', 'j')
     Atribuir
@@ -80,10 +81,12 @@ Programa
                       Token('MAIS', '+')
                         converter_real
                           2.0
-                        Token('NUMERO', '3')
+                        converter_real
+                          3.0
                   converter_real
                     4.0
-                Token('NUMERO', '3')
+                converter_real
+                  3.0
     Repita-Enquanto
       SeqComando
         Mostrar
