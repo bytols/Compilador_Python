@@ -27,6 +27,8 @@ semantic.preencher_tabela(tree)
 semantic.checkar_variavel_nao_declarada(tree)
 semantic.checkar_expressao_booleana(tree)
 semantic.ajustar_arvore(tree)
+#acho que não tem como ser invalido, pois, a variavel já foi declarada e uma atribuição só pode receber uma exp que é somente numeros e ints
+semantic.avaliar_atribuicao(tree)
 print_tree(tree)
 
 

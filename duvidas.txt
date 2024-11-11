@@ -1,1 +1,7 @@
 sera que o mostrar tem que ter mesmo o ;
+
+            if treeRoot.filhos[1].tipo != "converter_real_resultado":
+                new_node = ExpNum("converter_real_resultado")
+                next_node = treeRoot.filhos[1]
+                new_node.filhos = next_node
+                treeRoot.filhos[1] = new_node

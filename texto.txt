@@ -7,7 +7,7 @@ ler(j);
 j = 7.14;
 se l < l entao {
 		j = z;
-		j = a+b != c*d;
+		b = a+b != c*d;
 	}
 	senao
 		enquanto (i<j) {

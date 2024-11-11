@@ -1,20 +1,25 @@
 from typing import Type
-from arvore_abstrata import Declaracoes, Exsp, ExpNum, ComandoRepita, ComandoSe, ComandoEnquanto, InterfaceComando, ConverterReal
+from arvore_abstrata import Declaracoes, Exsp, ExpNum, ComandoRepita, ComandoSe, ComandoEnquanto, InterfaceComando, ConverterReal, ComandoAtribuir
 from rply import Token, token
 import string
+
+def verificar_elemento(lista_simbolos, valor, tipo):
+    for sublista in lista_simbolos:
+        if len(sublista) > 2 and valor == sublista[1] and sublista[2] == tipo:
+            return True 
+    return False
+
 def descer_exp(treenode, lista_simbolos):
     if treenode is None:
             return False
     if isinstance(treenode, ExpNum):
         valor = treenode.valor.value
-        for sublista in lista_simbolos:
-            if any(valor in elemento for elemento in sublista):
-                if sublista[2] == "real":
-                    print(f"é real poha! {valor}")
-                    return True
-                else:
-                    print(f'O valor "{valor}" está contido na sublista {sublista}, mas o primeiro elemento não é "real".')
-                break
+        if verificar_elemento(lista_simbolos=lista_simbolos, valor=valor , tipo="real"):
+            return True
+        else:
+            pass
+            #print(f'O valor "{valor}" está contido na sublista, mas o primeiro elemento não é "real".')
+
     try:
         for filho in treenode.filhos:
             if descer_exp(filho, lista_simbolos):  # Propaga o True encontrado
@@ -22,34 +27,24 @@ def descer_exp(treenode, lista_simbolos):
     except AttributeError:
         pass
     return False
-    
-def verificar_elemento(lista_simbolos, valor):
-    for sublista in lista_simbolos:
-        if len(sublista) > 2 and valor == sublista[1] and sublista[2] == "inteiro":
-            print(f"{valor} é inteiro msm!")
-            return True 
-    return False
 
 def concertar_exp(treenode, lista_simbolos):
     if treenode is None:
             return False
     if isinstance(treenode, ExpNum):
         valor = treenode.valor.value
-        print("concertar" , treenode.valor)
         if treenode.valor.value.isdigit():
             if treenode.tipo != "converter_real":
                 new_node = ExpNum(float(treenode.valor.value))
                 treenode.filhos = [new_node]
             treenode.valor = "converter_real"
             treenode.tipo = "converter_real"
-            print("foi")
-        if verificar_elemento(lista_simbolos, valor):
+        if verificar_elemento(lista_simbolos, valor, "inteiro"):
             if treenode.tipo != "converter_real":
                 new_node = ExpNum(treenode.valor.value)
                 treenode.filhos = [new_node]
             treenode.valor = "converter_real"
             treenode.tipo = "converter_real"
-            print("foi2")
     try:
         for filho in treenode.filhos:
             concertar_exp(filho, lista_simbolos)
@@ -62,11 +57,46 @@ class Semantic():
         self.lista_de_simbolos = []
         self.treeRoot = treeRoot
 
+    def avaliar_atribuicao(self,treeRoot, nivel = 0):    
+        if treeRoot is None:
+            return
+        if(isinstance(treeRoot, ComandoAtribuir)):
+            temp_root = treeRoot
+            valor = temp_root.filhos[0]
+            tipo = verificar_elemento(lista_simbolos=self.lista_de_simbolos , valor=valor.value , tipo="real")
+            if tipo: 
+                if treeRoot.filhos[1].tipo != "CONVERTER_REAL_RESULTADO":
+                    print(f"{valor.value} é real")
+                    new_node = ExpNum("CONVERTER_REAL_RESULTADO")
+                    next_node = [treeRoot.filhos[1]]
+                    new_node.filhos = next_node
+                    treeRoot.filhos[1] = new_node
+                    print("foi!")
+            else:
+                if treeRoot.filhos[1].tipo != "CONVERTER_INTEIRO_RESULTADO":
+                    print(f"{valor.value} é inteiro")
+                    new_node = ExpNum("CONVERTER_INTEIRO_RESULTADO")
+                    next_node = [treeRoot.filhos[1]]
+                    new_node.filhos = next_node
+                    treeRoot.filhos[1] = new_node
+                    print("foi!")
+
+        try:
+            for filho in treeRoot.filhos:
+                self.avaliar_atribuicao(filho, nivel + 1)
+        except AttributeError:
+            pass
+        try:
+            for irmao in treeRoot.irmaos:
+                self.avaliar_atribuicao(irmao , nivel)
+        except :
+            pass       
+
     def ajustar_arvore (self,treeRoot, nivel = 0):
         if treeRoot is None:
             return
         real = None
-        if(isinstance(treeRoot,InterfaceComando )):
+        if(isinstance(treeRoot, InterfaceComando)):
             temp_root = treeRoot
             real = descer_exp(temp_root, self.lista_de_simbolos)
         if  real:

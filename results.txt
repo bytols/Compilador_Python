@@ -18,13 +18,14 @@ Programa
   SeqComando
     Atribuir
       Token('ID', 'j')
-      converter_real
-        3.0
+      CONVERTER_REAL_RESULTADO
+        Token('NUMERO', '3')
     Ler
       Token('ID', 'j')
     Atribuir
       Token('ID', 'j')
-      Token('NUMERO_REAL', '7.14')
+      CONVERTER_REAL_RESULTADO
+        Token('NUMERO_REAL', '7.14')
     se-entao-senao
       Token('MENOR', '<')
         Token('ID', 'l')
@@ -32,16 +33,20 @@ Programa
       SeqComando
         Atribuir
           Token('ID', 'j')
-          Token('ID', 'z')
+          CONVERTER_REAL_RESULTADO
+            Token('ID', 'z')
         Atribuir
-          Token('ID', 'j')
-          Token('DIFERENTE', '!=')
-            Token('MAIS', '+')
-              Token('ID', 'a')
-              Token('ID', 'b')
-            Token('VEZES', '*')
-              Token('ID', 'c')
-              Token('ID', 'd')
+          Token('ID', 'b')
+          CONVERTER_INTEIRO_RESULTADO
+            Token('DIFERENTE', '!=')
+              Token('MAIS', '+')
+                converter_real
+                  a
+                converter_real
+                  b
+              Token('VEZES', '*')
+                Token('ID', 'c')
+                Token('ID', 'd')
       Acao
         Enquanto
           Token('MENOR', '<')
@@ -50,43 +55,40 @@ Programa
           SeqComando
             Atribuir
               Token('ID', 'j')
-              Token('MAIS', '+')
-                Token('ID', 'j')
-                converter_real
-                  1.0
+              CONVERTER_REAL_RESULTADO
+                Token('MAIS', '+')
+                  Token('ID', 'j')
+                  converter_real
+                    1.0
             Atribuir
               Token('ID', 'j')
-              Token('DIVISAO', '/')
-                Token('MAIS', '+')
-                  Token('MENOS', '-')
-                    Token('ID', 'd')
-                    Token('ID', 'b')
-                  Token('ID', 'c')
-                Token('ID', 'd')
-            Atribuir
-              Token('ID', 'a')
-              Token('OU', '||')
-                Token('VEZES', '*')
+              CONVERTER_REAL_RESULTADO
+                Token('DIVISAO', '/')
                   Token('MAIS', '+')
                     Token('MENOS', '-')
+                      Token('ID', 'd')
                       converter_real
-                        2.0
+                        b
+                    Token('ID', 'c')
+                  Token('ID', 'd')
+            Atribuir
+              Token('ID', 'a')
+              CONVERTER_INTEIRO_RESULTADO
+                Token('OU', '||')
+                  Token('VEZES', '*')
+                    Token('MAIS', '+')
+                      Token('MENOS', '-')
+                        Token('NUMERO', '2')
+                        Token('ABREPARENTESES', '(')
+                          Token('MAIS', '+')
+                            Token('ID', 'a')
+                            Token('NUMERO', '1')
                       Token('ABREPARENTESES', '(')
                         Token('MAIS', '+')
-                          converter_real
-                            a
-                          converter_real
-                            1.0
-                    Token('ABREPARENTESES', '(')
-                      Token('MAIS', '+')
-                        converter_real
-                          2.0
-                        converter_real
-                          3.0
-                  converter_real
-                    4.0
-                converter_real
-                  3.0
+                          Token('NUMERO', '2')
+                          Token('NUMERO', '3')
+                    Token('NUMERO', '4')
+                  Token('NUMERO', '3')
     Repita-Enquanto
       SeqComando
         Mostrar
