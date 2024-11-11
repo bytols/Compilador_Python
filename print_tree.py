@@ -3,7 +3,7 @@ from arvore_abstrata import Programa, DeclaracaoVariaveis, SeqComando
 
 # função que printa a arvore sintática
 #recebe a raiz da arvore, um nivel, e o nome do arquivo em que ela ira escrever a arvore
-def print_tree(treeRoot, nivel = 0, file:str = "results.txt") -> None:
+def print_tree(treeRoot, nivel = 0, file:str = "arvore.txt") -> None:
     # abri o arquivo txt em que a arvore será escrito
     with open("results.txt" , "a") as file:
 

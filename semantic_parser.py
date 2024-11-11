@@ -57,6 +57,17 @@ class Semantic():
         self.lista_de_simbolos = []
         self.treeRoot = treeRoot
 
+    def salvar_matriz_em_arquivo(self, nome_arquivo="lista_de_simbolos.txt"):
+        try:
+            with open(nome_arquivo, "w") as arquivo:
+                for linha in self.lista_de_simbolos:
+                    endereco_memoria, nome_variavel, tipo_variavel = linha
+                    # Escreve a linha no arquivo
+                    arquivo.write(f"{endereco_memoria} {nome_variavel} {tipo_variavel}\n")
+            print(f"Matriz salva com sucesso em {nome_arquivo}.")
+        except Exception as e:
+            print(f"Erro ao salvar a matriz no arquivo: {e}")
+
     def avaliar_atribuicao(self,treeRoot, nivel = 0):    
         if treeRoot is None:
             return

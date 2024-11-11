@@ -1,0 +1,12 @@
+0x23404c79690 igt inteiro
+0x23404c7ab50 a inteiro
+0x23404c7ad50 b inteiro
+0x23404c7afd0 l inteiro
+0x23404c7a7d0 j real
+0x23404c7bad0 ki real
+0x23404c7abd0 malta real
+0x23404c79f50 z real
+0x23404c7b050 d real
+0x23404c7bc10 c real
+0x23404c7aed0 jopa real
+0x23404c7b3d0 i real
