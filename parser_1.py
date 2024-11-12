@@ -71,11 +71,13 @@ class Parser():
             declaracoes = p[1]
             declaracoes.valor = (p[0])
             declaracoes.filhos.append(p[2])
+            declaracoes.lineno = p[0].getsourcepos().lineno
             return(declaracoes) 
          else:
             declaracoes = Declaracoes(p[1])
             declaracoes.valor = (p[0])
             declaracoes.filhos.append(p[1])
+            declaracoes.lineno = p[0].getsourcepos().lineno
             return(declaracoes)
       
       @self.pg.production('listaIdentificador : listaIdentificador VIRGULA ID')
@@ -84,11 +86,13 @@ class Parser():
          if len(p) == 3:
             listaIdentificador = p[0]
             listaIdentificador.irmaos.append(p[2])
+            listaIdentificador.lineno = p[2].getsourcepos().lineno
             return (listaIdentificador)
          else:
             listaIdentificador = ListaIdentificador(p[0])
             if p[0] != None:
                listaIdentificador.valor = p[0]
+               listaIdentificador.lineno = p[0].getsourcepos().lineno
             return(listaIdentificador)
 
       @self.pg.production('seqComando : seqComando comando')
@@ -126,6 +130,7 @@ class Parser():
                   seentaosenao.filhos.append(p[2])
                   seentaosenao.filhos.append(p[4])
                   seentaosenao.filhos.append(p[6])
+                  seentaosenao.lineno = p[0].getsourcepos().lineno
                   return(seentaosenao)
                else:
                   seentaosenao = ComandoSe(p[2], p[4])
@@ -133,6 +138,7 @@ class Parser():
                   seentaosenao.valor = 'se-entao'
                   seentaosenao.filhos.append(p[2])
                   seentaosenao.filhos.append(p[4])
+                  seentaosenao.lineno = p[0].getsourcepos().lineno
                   return(seentaosenao)
             else:
                if len(p) > 4:
@@ -140,6 +146,7 @@ class Parser():
                   seentaosenao.filhos.append(p[1])
                   seentaosenao.filhos.append(p[3])
                   seentaosenao.filhos.append(p[5])
+                  seentaosenao.lineno = p[0].getsourcepos().lineno
                   return(seentaosenao)
                else:
                   seentaosenao = ComandoSe(p[1], p[3])
@@ -147,36 +154,43 @@ class Parser():
                   seentaosenao.valor = 'se-entao'
                   seentaosenao.filhos.append(p[1])
                   seentaosenao.filhos.append(p[3])
+                  seentaosenao.lineno = p[0].getsourcepos().lineno
                   return(seentaosenao)
          elif p[0].value == 'enquanto':
             comandoEnquanto = ComandoEnquanto(p[2],p[4])
             comandoEnquanto.filhos.append(p[2])
             comandoEnquanto.filhos.append(p[4])
+            comandoEnquanto.lineno = p[0].getsourcepos().lineno
             return(comandoEnquanto)
          elif p[0].value == 'repita':
             if p[3].value == '(':
                comandoRepita = ComandoRepita(p[1],p[4])
                comandoRepita.filhos.append(p[1])
                comandoRepita.filhos.append(p[4])
+               comandoRepita.lineno = p[0].getsourcepos().lineno
                return(comandoRepita)
             else :
                comandoRepita = ComandoRepita(p[1],p[3])
                comandoRepita.filhos.append(p[1])
                comandoRepita.filhos.append(p[3])
+               comandoRepita.lineno = p[0].getsourcepos().lineno
                return(comandoRepita)
          elif p[0].value == 'ler':
             comandoLer = ComandoLer(p[2])
             comandoLer.filhos.append(p[2])
+            comandoLer.lineno = p[0].getsourcepos().lineno
             return(comandoLer)
          elif p[0].value == 'mostrar':
             comandoMostrar = ComandoMostrar(p[2])
             comandoMostrar.filhos.append(p[2])
+            comandoMostrar.lineno = p[0].getsourcepos().lineno
             return(comandoMostrar)
          elif p[1].value == '=':
             comandoAtribuir = ComandoAtribuir(p[0], p[2])
             comandoAtribuir.filhos.append(p[0])
             #comandoAtribuir.filhos.append(p[1]) será que precisa?
             comandoAtribuir.filhos.append(p[2])
+            comandoAtribuir.lineno = p[0].getsourcepos().lineno
             return(comandoAtribuir)
          
       @self.pg.production('acao : ABRECH seqComando FECHACH')
@@ -214,22 +228,26 @@ class Parser():
                exp.valor = p[1]
                exp.filhos.append(p[0])
                exp.filhos.append(p[2])
+               exp.lineno = p[1].getsourcepos().lineno
                return(exp)
             else:
                exp = Exsp(p[0], p[2], p[1])
                exp.valor = p[1]
                exp.filhos.append(p[0])
                exp.filhos.append(p[2])
+               exp.lineno = p[1].getsourcepos().lineno
                return(exp)
          else:
             if len(p) == 3:
                exp = ExpParenteses(p[1], p[0])
                exp.valor = p[0]
                exp.filhos.append(p[1])
+               exp.lineno = p[0].getsourcepos().lineno
                return (exp)
             else:
                exp = ExpNum(p[0])
                exp.valor = p[0]
+               exp.lineno = p[0].getsourcepos().lineno
                return(exp)
 
    # ultimo metodo para criar a arvore sintática!

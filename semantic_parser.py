@@ -1,5 +1,5 @@
 from typing import Type
-from arvore_abstrata import Declaracoes, Exsp, ExpNum, ComandoRepita, ComandoSe, ComandoEnquanto, InterfaceComando, ConverterReal, ComandoAtribuir
+from arvore_abstrata import Declaracoes, Exsp, ExpNum, ComandoRepita, ComandoSe, ComandoEnquanto, InterfaceComando, ConverterReal, ComandoAtribuir, ComandoLer, ComandoMostrar
 from rply import Token, token
 import string
 
@@ -56,17 +56,54 @@ class Semantic():
     def __init__(self, treeRoot) -> None:
         self.lista_de_simbolos = []
         self.treeRoot = treeRoot
+        self.memoria = 0
 
     def salvar_matriz_em_arquivo(self, nome_arquivo="lista_de_simbolos.txt"):
         try:
             with open(nome_arquivo, "w") as arquivo:
                 for linha in self.lista_de_simbolos:
-                    endereco_memoria, nome_variavel, tipo_variavel = linha
+                    endereco_memoria, nome_variavel, tipo_variavel, line = linha
                     # Escreve a linha no arquivo
-                    arquivo.write(f"{endereco_memoria} {nome_variavel} {tipo_variavel}\n")
+                    arquivo.write(f"{endereco_memoria} {nome_variavel} {tipo_variavel} {line}\n")
             print(f"Matriz salva com sucesso em {nome_arquivo}.")
         except Exception as e:
             print(f"Erro ao salvar a matriz no arquivo: {e}")
+
+    def verificar_ler(self,treeRoot):
+        if treeRoot is None:
+            return
+        if(isinstance(treeRoot, ComandoLer)):
+            if treeRoot.filhos[0].name != 'ID':
+                raise ValueError(f"{treeRoot.filhos[0].name }não é um identificador válido na linha {treeRoot.lineno}") 
+
+        try:
+            for filho in treeRoot.filhos:
+                self.verificar_ler(filho)
+        except AttributeError:
+            pass
+        try:
+            for irmao in treeRoot.irmaos:
+                self.verificar_ler(irmao)
+        except :
+            pass       
+
+    def verificar_mostrar(self,treeRoot):
+        if treeRoot is None:
+            return
+        if(isinstance(treeRoot, ComandoMostrar)):
+            if treeRoot.filhos[0].name != 'ID':
+                raise ValueError(f"{treeRoot.filhos[0].name }não é um identificador válido na linha {treeRoot.lineno}") 
+
+        try:
+            for filho in treeRoot.filhos:
+                self.verificar_mostrar(filho)
+        except AttributeError:
+            pass
+        try:
+            for irmao in treeRoot.irmaos:
+                self.verificar_mostrar(irmao)
+        except :
+            pass    
 
     def avaliar_atribuicao(self,treeRoot, nivel = 0):    
         if treeRoot is None:
@@ -129,10 +166,10 @@ class Semantic():
             return
         if isinstance(treeRoot, ComandoEnquanto) or isinstance(treeRoot, ComandoSe):
             if isinstance(treeRoot.filhos[0], Exsp) and treeRoot.filhos[0].valor.value not in {'>', '<', '>=', '<=', '==', '!='}:
-                raise ValueError(f'a exp de {treeRoot.tipo}, não é booleano')
+                raise ValueError(f'a exp de {treeRoot.tipo}, não é booleano na linha {treeRoot.lineno}')
         if isinstance(treeRoot, ComandoRepita):
             if isinstance(treeRoot.filhos[1], Exsp) and treeRoot.filhos[1].valor.value not in {'>', '<', '>=', '<=', '==', '!='}:
-                raise ValueError(f'a exp de {treeRoot.tipo}, não é booleano')
+                raise ValueError(f'a exp de {treeRoot.tipo}, não é booleano na linha {treeRoot.lineno}')
         try:
             for filho in treeRoot.filhos:
                 self.checkar_expressao_booleana(filho, nivel + 1)
@@ -149,10 +186,10 @@ class Semantic():
             return
         if isinstance(treeRoot, token.Token):
             if treeRoot.value not in [s for sublist in self.lista_de_simbolos for s in sublist]:
-                raise ValueError(f"{treeRoot.value} não foi declarada")
+                raise ValueError(f"{treeRoot.value} não foi declarada na linha {treeRoot.lineno}")
         if isinstance(treeRoot, ExpNum) and treeRoot.valor.name == 'ID':
             if treeRoot.valor.value not in [s for sublist in self.lista_de_simbolos for s in sublist]:
-                raise ValueError(f"{treeRoot.valor.value} não foi declarada")
+                raise ValueError(f"{treeRoot.valor.value} não foi declarada {treeRoot.lineno}")
         try:
             for filho in treeRoot.filhos:
                 self.checkar_variavel_nao_declarada(filho, nivel + 1)
@@ -172,22 +209,32 @@ class Semantic():
                 for i in range(len(treeRoot.filhos)):
                     treeRoot = treeRoot.filhos[i]
                     elemento = []
-                    elemento.append(hex(id(treeRoot)))
+                    elemento.append(self.memoria)
+                    if treeRoot.valor.value == 'real':
+                        self.memoria = self.memoria + 8
+                    else:
+                        self.memoria = self.memoria + 4
                     elemento.append(treeRoot.valor.value)
                     elemento.append(endereco)
+                    elemento.append(treeRoot.lineno)
                     for substring in self.lista_de_simbolos:
                         if treeRoot.valor.value in substring:
-                            raise ValueError(treeRoot.valor, "essa variavel já foi utilizada")
+                            raise ValueError(treeRoot.valor, "essa variavel já foi utilizada na linha" , treeRoot.lineno)
                     self.lista_de_simbolos.append(elemento)
                     treeRootirmaos = treeRoot.irmaos
                     for j in range(len(treeRootirmaos)):
                         elemento = []
-                        elemento.append(hex(id(treeRootirmaos[j])))
+                        elemento.append(self.memoria)
+                        if treeRoot.valor.value == 'real':
+                            self.memoria = self.memoria + 8
+                        else:
+                            self.memoria = self.memoria + 4
                         elemento.append(treeRootirmaos[j].value)
                         elemento.append(endereco)
+                        elemento.append(treeRoot.lineno)
                         for substring in self.lista_de_simbolos:
                             if treeRootirmaos[j].value in substring:
-                                raise ValueError(treeRootirmaos[j].value, "essa variavel já foi utilizada")
+                                raise ValueError(treeRootirmaos[j].value, "essa variavel já foi utilizada na linha" , treeRoot.lineno)
                         self.lista_de_simbolos.append(elemento)
             try:
                 for filho in treeRoot.filhos:

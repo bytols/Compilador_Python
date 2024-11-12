@@ -27,7 +27,7 @@ Programa
       CONVERTER_REAL_RESULTADO
         Token('NUMERO_REAL', '7.14')
     se-entao-senao
-      Token('MENOR', '<')
+      Token('MAIOR', '>')
         Token('ID', 'l')
         Token('ID', 'l')
       SeqComando
@@ -49,7 +49,7 @@ Programa
                 Token('ID', 'd')
       Acao
         Enquanto
-          Token('MENOR', '<')
+          Token('MAIOR', '>')
             Token('ID', 'i')
             Token('ID', 'j')
           SeqComando

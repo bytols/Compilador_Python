@@ -24,6 +24,8 @@ class Programa(BaseBox):
         self.valor = 'Programa'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
+
 
     # função eval que retorna os não terminais da regra de produçaõ!
     def eval(self):
@@ -39,6 +41,7 @@ class DeclaracaoVariaveis(BaseBox):
         self.valor = 'DeclaracaoVariaveis'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return[self.declaracao , self.proxima_declaracao]
@@ -51,6 +54,7 @@ class SeqComando(BaseBox):
         self.valor = 'SeqComando'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return[self.comando , self.seqComando]
@@ -64,6 +68,7 @@ class Declaracoes(BaseBox):
         self.valor = valor
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return([self.declaracao ,self.listaIdentificador])
@@ -77,6 +82,7 @@ class ListaIdentificador(BaseBox):
         self.valor = id.value
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return([self.listaIdentificador])
@@ -91,6 +97,8 @@ class ComandoSe(BaseBox):
         self.valor = "se-entao-senao"
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
+
 
     def eval(self):
         if self.acao_else:
@@ -107,6 +115,7 @@ class ComandoEnquanto(BaseBox):
         self.valor = 'Enquanto'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return([self.exp, self.acao])
@@ -120,6 +129,7 @@ class ComandoRepita(BaseBox):
         self.valor = 'Repita-Enquanto'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return([self.exp, self.acao])
@@ -131,6 +141,7 @@ class ComandoLer(BaseBox):
         self.valor = 'Ler'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return([self.valor])
@@ -142,6 +153,7 @@ class ComandoMostrar(BaseBox, InterfaceComando):
         self.valor = 'Mostrar'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return([self.valor])
@@ -154,6 +166,7 @@ class ComandoAtribuir(BaseBox, InterfaceComando):
         self.valor = 'Atribuir'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return([self.exp, self.valor])
@@ -166,6 +179,7 @@ class Acao(BaseBox):
         self.valor = 'Acao'
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return self.comando
@@ -179,6 +193,7 @@ class Exsp(BaseBox, Interfaceexp):
         self.valor = token
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return [self.exp_left , self.exp_right] 
@@ -192,6 +207,7 @@ class ExpEOu(BaseBox, Interfaceexp):
         self.valor = token
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return [self.exp_left , self.exp_right] 
@@ -204,6 +220,7 @@ class ExpParenteses(BaseBox, Interfaceexp):
         self.valor = token
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return self.exp 
@@ -216,6 +233,7 @@ class ExpNum(BaseBox, Interfaceexp):
         self.valor = token
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return [self.exp_left , self.exp_right] 
@@ -228,6 +246,7 @@ class ConverterReal(BaseBox):
         self.valor = "converter_real"
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return self.exp 
@@ -240,6 +259,7 @@ class Converter_Ints(BaseBox):
         self.valor = "converter_int"
         self.filhos = []
         self.irmaos = []
+        self.lineno = None
 
     def eval(self):
         return self.exp 
