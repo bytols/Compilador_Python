@@ -32,7 +32,6 @@ semantic.avaliar_atribuicao(tree)
 semantic.verificar_mostrar(tree)
 semantic.verificar_ler(tree)
 print_tree(tree)
-semantic.salvar_matriz_em_arquivo()
 # a ultima parte seria sobre o ler e mostrar mas não tem como ser invalida as expressões se chegou até aqui...
 
 

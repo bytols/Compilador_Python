@@ -23,7 +23,7 @@ class Lexer():
         self.lg.add('LER' , r'ler' )
         self.lg.add('MOSTRAR' , r'mostrar' )
         self.lg.add('SEPARADOR' , r'\$\$')
-        self.lg.add('ID' , r'[a-zA-Z]+[0-9]+ |[a-zA-Z]+[a-zA-Z][a-zA-Z\w]+ |[a-zA-Z]+' )
+        self.lg.add('ID' , r'(?:[a-zA-Z]+[0-9]+|[a-zA-Z]+[a-zA-Z][a-zA-Z\w]+|[a-zA-Z]+)(?!\s+$)' )
         self.lg.add('NUMERO_REAL' , r'[0-9]\.[0-9]+')
         self.lg.add('NUMERO' , r'[0-9]+' )
         self.lg.add('DIGITO' , r'\b[0-9]\b' )

@@ -1,100 +1,22 @@
 Programa
   DeclaracaoVariaveis
     Token('INTEIRO', 'inteiro')
-      Token('ID', 'igt')
-      Token('ID', 'a')
-      Token('ID', 'b')
-      Token('ID', 'l')
-    Token('REAL', 'real')
-      Token('ID', 'j')
-      Token('ID', 'ki')
-      Token('ID', 'malta')
-      Token('ID', 'z')
-      Token('ID', 'd')
-      Token('ID', 'c')
-    Token('REAL', 'real')
-      Token('ID', 'jopa')
-      Token('ID', 'i')
+      Token('ID', 'cont')
   SeqComando
     Atribuir
-      Token('ID', 'j')
-      CONVERTER_REAL_RESULTADO
-        Token('NUMERO', '3')
-    Ler
-      Token('ID', 'j')
-    Atribuir
-      Token('ID', 'j')
-      CONVERTER_REAL_RESULTADO
-        Token('NUMERO_REAL', '7.14')
-    se-entao-senao
-      Token('MAIOR', '>')
-        Token('ID', 'l')
-        Token('ID', 'l')
-      SeqComando
-        Atribuir
-          Token('ID', 'j')
-          CONVERTER_REAL_RESULTADO
-            Token('ID', 'z')
-        Atribuir
-          Token('ID', 'b')
-          CONVERTER_INTEIRO_RESULTADO
-            Token('DIFERENTE', '!=')
-              Token('MAIS', '+')
-                converter_real
-                  a
-                converter_real
-                  b
-              Token('VEZES', '*')
-                Token('ID', 'c')
-                Token('ID', 'd')
-      Acao
-        Enquanto
-          Token('MAIOR', '>')
-            Token('ID', 'i')
-            Token('ID', 'j')
-          SeqComando
-            Atribuir
-              Token('ID', 'j')
-              CONVERTER_REAL_RESULTADO
-                Token('MAIS', '+')
-                  Token('ID', 'j')
-                  converter_real
-                    1.0
-            Atribuir
-              Token('ID', 'j')
-              CONVERTER_REAL_RESULTADO
-                Token('DIVISAO', '/')
-                  Token('MAIS', '+')
-                    Token('MENOS', '-')
-                      Token('ID', 'd')
-                      converter_real
-                        b
-                    Token('ID', 'c')
-                  Token('ID', 'd')
-            Atribuir
-              Token('ID', 'a')
-              CONVERTER_INTEIRO_RESULTADO
-                Token('OU', '||')
-                  Token('VEZES', '*')
-                    Token('MAIS', '+')
-                      Token('MENOS', '-')
-                        Token('NUMERO', '2')
-                        Token('ABREPARENTESES', '(')
-                          Token('MAIS', '+')
-                            Token('ID', 'a')
-                            Token('NUMERO', '1')
-                      Token('ABREPARENTESES', '(')
-                        Token('MAIS', '+')
-                          Token('NUMERO', '2')
-                          Token('NUMERO', '3')
-                    Token('NUMERO', '4')
-                  Token('NUMERO', '3')
+      Token('ID', 'cont')
+      CONVERTER_INTEIRO_RESULTADO
+        Token('NUMERO', '0')
     Repita-Enquanto
       SeqComando
-        Mostrar
-          Token('ID', 'a')
+        Atribuir
+          Token('ID', 'cont')
+          CONVERTER_INTEIRO_RESULTADO
+            Token('MAIS', '+')
+              Token('ID', 'cont')
+              Token('NUMERO', '1')
       Token('MAIORIGUAL', '>=')
-        Token('ID', 'i')
-        Token('NUMERO', '1')
+        Token('ID', 'cont')
+        Token('NUMERO', '10')
     Mostrar
-      Token('ID', 'j')
+      Token('ID', 'cont')

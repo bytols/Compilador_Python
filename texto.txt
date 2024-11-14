@@ -1,21 +1,6 @@
-inteiro igt, a, b, l;
-real j, ki, malta, z, d,c;
-real jopa, i;
-
-j=3;
-ler(j);
-j = 7.14;
-se l > l entao {
-		j = z;
-		b = a+b != c*d;
-	}
-	senao
-		enquanto (i > j) {
-		  j = j + 1;
-		  j = d-b+c/d;
-		  a = 2-(a+1) + (2+3) * 4 || 3;
-		}
+inteiro cont;
+cont = 0;
 repita {
-	mostrar(a);
- } ate (i >= 1)
-mostrar (j);
+    cont = cont + 1;
+} ate cont >= 10
+mostrar(cont);

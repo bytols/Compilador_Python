@@ -188,8 +188,11 @@ class Semantic():
             if treeRoot.value not in [s for sublist in self.lista_de_simbolos for s in sublist]:
                 raise ValueError(f"{treeRoot.value} não foi declarada na linha {treeRoot.lineno}")
         if isinstance(treeRoot, ExpNum) and treeRoot.valor.name == 'ID':
-            if treeRoot.valor.value not in [s for sublist in self.lista_de_simbolos for s in sublist]:
-                raise ValueError(f"{treeRoot.valor.value} não foi declarada {treeRoot.lineno}")
+            valor = treeRoot.valor.value
+            if valor not in [s for sublist in self.lista_de_simbolos for s in sublist]:
+                print([s for sublist in self.lista_de_simbolos for s in sublist])
+                print(f"{valor}a" )
+                raise ValueError(f"{valor} não foi declarada {treeRoot.lineno}")
         try:
             for filho in treeRoot.filhos:
                 self.checkar_variavel_nao_declarada(filho, nivel + 1)

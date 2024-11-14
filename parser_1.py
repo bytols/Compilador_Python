@@ -124,7 +124,7 @@ class Parser():
       @self.pg.production('comando : ID ATRIBUICAO exp PONTOVIRGULA')
       def comando(p):
          if p[0].value == 'se':
-            if p[1].valor == '(':
+            if p[1].value == '(':
                if len(p) > 6:
                   seentaosenao = ComandoSe(p[2], p[4], p[6])
                   seentaosenao.filhos.append(p[2])
@@ -163,7 +163,7 @@ class Parser():
             comandoEnquanto.lineno = p[0].getsourcepos().lineno
             return(comandoEnquanto)
          elif p[0].value == 'repita':
-            if p[3].value == '(':
+            if p[3].valor == '(':
                comandoRepita = ComandoRepita(p[1],p[4])
                comandoRepita.filhos.append(p[1])
                comandoRepita.filhos.append(p[4])
